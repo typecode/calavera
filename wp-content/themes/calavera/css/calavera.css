@@ -1,0 +1,66 @@
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+88888888888                               d88P  .d8888b.                888          
+    888                                  d88P  d88P  Y88b               888          
+    888                                 d88P   888    888               888          
+    888  888  888 88888b.   .d88b.     d88P    888         .d88b.   .d88888  .d88b.  
+    888  888  888 888 "88b d8P  Y8b   d88P     888        d88""88b d88" 888 d8P  Y8b 
+    888  888  888 888  888 88888888  d88P      888    888 888  888 888  888 88888888 
+    888  Y88b 888 888 d88P Y8b.     d88P       Y88b  d88P Y88..88P Y88b 888 Y8b.     
+    888   "Y88888 88888P"   "Y8888 d88P         "Y8888P"   "Y88P"   "Y88888  "Y8888  
+              888 888                                                                
+         Y8b d88P 888                                                                
+          "Y88P"  888
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+
+body {
+	font-family:Helvetica, Arial, sans-serif;
+	color:#000000; background-color:#ffffff;
+}
+
+a { text-decoration:none; }
+
+h2 {
+	line-height:1; font-size:24px; font-weight:bold;
+	border-bottom:1px solid #fecc00;
+}
+
+.wrap { 
+	width:900px; margin:0 auto; text-align:left;
+}
+
+.rail {
+	position:fixed; margin:0 0 0 10px; padding:0 0 4px;
+	background-color:#000000;
+	-moz-border-radius-bottomleft:6px; -moz-border-radius-bottomright:6px;
+	-webkit-border-bottom-left-radius:6px; -webkit-border-bottom-right-radius:6px;
+}
+.rail .hd {
+	padding:35px 12px 8px;
+	border-bottom:1px solid #fecc00;
+}
+
+.main {
+	width:645px; float:right; margin:37px 56px 0 0;
+}
+
+.logo a {
+	width:74px; height:101px;
+	background-image:url("../images/calavera.png");
+	background-position:center;
+}
+
+.menu {
+	margin:1px 0 0;
+}
+.menu > li {
+	border-top:1px solid #fecc00;
+}
+.menu > li > a {
+	display:block; padding:4px 5px 2px;
+	text-transform:uppercase;
+	font-weight:bold;
+	color:#f7a300;
+}
+
+.page-controls {}
