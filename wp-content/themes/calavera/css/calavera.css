@@ -63,4 +63,21 @@ h2 {
 	color:#f7a300;
 }
 
-.page-controls {}
+.pagination {
+	float:right; margin:27px -16px 0 0;
+}
+.pagination .controls {
+	position:fixed;
+	background-color:#000000;
+	-moz-border-radius:6px;
+}
+.pagination .controls > a {
+	width:14px; height:22px; padding:8px;
+	background-position:center;
+	border-top:1px solid #fecc00;
+}
+.pagination .controls > a:first-child { 
+	border-top:0;
+}
+.pagination .prev { background-image:url("../images/controlArrowUp.png"); }
+.pagination .next { background-image:url("../images/controlArrowDown.png"); }

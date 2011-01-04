@@ -35,21 +35,28 @@ get_header();
 						
 					</div>
 				</div>
-			</div>
-			<div class="page-controls">
-				<a class="up graphic" href="">
-					<span>Up</span>
-				</a>
-				<a class="down graphic" href="">
-					<span>Down</span>
-				</a>
+				<div class="pagination">
+					<div class="controls graphic">
+						<a class="prev" href="">
+							<span>Up</span>
+						</a>
+						<a class="next" href="">
+							<span>Down</span>
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+		<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/calavera.js"></script>
 		<script type="text/javascript">
-			jQuery(function() {
-			
-			});
+			(function(app, $) {
+
+				$(function() {
+					app.log("document[ready]");
+				});
+
+			}(CALAVERA, jQuery));
 		</script>
 	</body>
 </html>
