@@ -81,5 +81,5 @@ button,
 
 /*----- media -----*/
 
-.graphic, .graphic a { display:block; }
+.graphic, .graphic a { display:block; background-position:center; }
 .graphic span { display:none; } /* image replacement */

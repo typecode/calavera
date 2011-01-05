@@ -40,4 +40,8 @@ if (!CALAVERA) {
 		app.log = app.dump = function() {};
 	}
 	
+	app.instances = {
+		browser: {}
+	};
+		
 }(CALAVERA, jQuery));
