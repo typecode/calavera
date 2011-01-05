@@ -19,8 +19,8 @@ if (!CALAVERA) {
 	};
 }
 
-// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-// ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 (function(app, $) {
 	
@@ -42,6 +42,59 @@ if (!CALAVERA) {
 	
 	app.instances = {
 		browser: {}
+	};
+	
+	app.parser = {
+		// convert "Npx" to N
+		px: function(str) {
+			return Number(str.substring(0, str.length - 2));
+		}
+	};
+	
+	app.menu = function(selector, options) {
+		var $menu, o;
+		
+		app.log("app[menu]");
+		
+		o = $.extend({
+			selectedClass: "selected",
+			slideSpeed: 150
+		}, options);
+		
+		$menu = $(selector);
+		
+		// setting explicit width, so that 
+		// expanding a section doesn't widen the menu
+		$menu.width( $menu.width() );
+		
+		$menu.children("li").each(function() {
+			var item, submenu;
+			
+			item = $(this);
+			submenu = item.children("ul");
+			
+			if (submenu.length === 1) {
+				item.children("a:first").click(function(e) {
+					e.preventDefault();
+					$menu.openSection(item, submenu);
+				});
+			}
+		});
+		
+		$menu.openSection = function(item, submenu) {
+			submenu.slideToggle(o.slideSpeed);
+			item.toggleClass(o.selectedClass);
+			
+			item.siblings().each(function() {
+				var sib = $(this);
+				if (sib.hasClass(o.selectedClass)) {
+					sib.children("ul").slideUp(o.slideSpeed);
+					sib.removeClass(o.selectedClass);
+				}
+			});
+		};
+		
+		return $menu;
 	};
 		
 }(CALAVERA, jQuery));

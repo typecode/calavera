@@ -15,14 +15,44 @@ get_header();
 					</a></h1>
 				</div>
 				<div class="bd">
-					<ul class="menu">
+					<ul id="menu" class="menu">
 						<li><a href="">News</a></li>
 						<li><a href="">Contact</a></li>
 						<li><a href="">Info</a></li>
 						<li><a href="">Features</a></li>
-						<li><a href="">Shorts</a></li>
-						<li><a href="">Music Videos</a></li>
-						<li><a href="">Commercials</a></li>
+						<li>
+							<a href="">Shorts</a>
+							<ul>
+								<li>
+									<a href="">Darkmatter</a>
+								</li>
+								<li>
+									<a href="">Death and the Blue-Eyed Boy</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="">Music Videos</a>
+							<ul>
+								<li>
+									<a href="">Darkmatter</a>
+								</li>
+								<li>
+									<a href="">Death and the Blue-Eyed Boy</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="">Commercials</a>
+							<ul>
+								<li>
+									<a href="">Darkmatter</a>
+								</li>
+								<li>
+									<a href="">Death and the Blue-Eyed Boy</a>
+								</li>
+							</ul>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -30,6 +60,9 @@ get_header();
 				<div class="box">
 					<div class="hd">
 						<h2>Death and the Blue-Eyed Boy</h2>
+						<div class="meta">
+							<cite>Director: Grant Curatola, Producer: Brett Potter</cite>
+						</div>
 					</div>
 					<div class="bd">
 						
@@ -54,6 +87,9 @@ get_header();
 
 				$(function() {
 					app.log("document[ready]");
+					
+					app.instances.menu = app.menu("#menu");
+					
 				});
 
 			}(CALAVERA, jQuery));
