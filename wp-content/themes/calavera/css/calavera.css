@@ -108,7 +108,7 @@ a.more-link {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
 .pagination {
-	position:absolute; right:-16px; top:53px;
+	position:absolute; right:-16px; top:50px;
 }
 .pagination .controls {
 	position:fixed;

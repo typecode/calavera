@@ -67,7 +67,7 @@ get_header();
 					<div class="bd">
 						
 						<!-- Begin VideoJS -->
-						  <div class="video-js-box">
+						  <div class="video-js-box tube-css">
 						    <!-- Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody -->
 						    <video class="video-js" width="640" height="264" controls preload poster="http://video-js.zencoder.com/oceans-clip.png">
 						      <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
