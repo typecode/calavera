@@ -40,9 +40,7 @@ if (!CALAVERA) {
 		app.log = app.dump = function() {};
 	}
 	
-	app.instances = {
-		browser: {}
-	};
+	app.instances = {};
 	
 	app.parser = {
 		// convert "Npx" to N
@@ -72,12 +70,12 @@ if (!CALAVERA) {
 			if (item.children("ul").length === 1) {
 				item.children("a").click(function(e) {
 					e.preventDefault();
-					$menu.openSection(item);
+					$menu.toggleSection(item);
 				});
 			}
 		});
 		
-		$menu.openSection = function(item) {
+		$menu.toggleSection = function(item) {
 			var submenu = item.children("ul");
 			if (!submenu.length)
 				return false;

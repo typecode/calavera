@@ -18,8 +18,13 @@ body {
 	color:#000000; background-color:#ffffff;
 }
 
-a, a:link, a:hover { 
+a, 
+a:link, 
+a:visited { 
 	color:#000000; text-decoration:none; font-weight:bold; 
+}
+a:hover, a:active {
+	
 }
 
 h2 {
@@ -88,11 +93,17 @@ p:first-child {
 	float:right; margin:37px 56px 37px 0;
 }
 
-.meta cite { font-style:normal; }
+.meta cite { 
+	font-style:normal; 
+}
 
-.main .box .hd { margin:0 0 16px; }
+.main .box .hd { 
+	margin:0 0 16px; 
+}
 
-a.more-link { text-transform:uppercase; }
+a.more-link { 
+	text-transform:uppercase; 
+}
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
