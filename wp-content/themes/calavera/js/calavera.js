@@ -58,30 +58,30 @@ if (!CALAVERA) {
 		
 		o = $.extend({
 			selectedClass: "selected",
-			slideSpeed: 150
+			slideSpeed: 100
 		}, options);
 		
 		$menu = $(selector);
 		
-		// setting explicit width, so that 
+		// setting an explicit width, to insure that 
 		// expanding a section doesn't widen the menu
 		$menu.width( $menu.width() );
 		
 		$menu.children("li").each(function() {
-			var item, submenu;
-			
-			item = $(this);
-			submenu = item.children("ul");
-			
-			if (submenu.length === 1) {
-				item.children("a:first").click(function(e) {
+			var item = $(this);
+			if (item.children("ul").length === 1) {
+				item.children("a").click(function(e) {
 					e.preventDefault();
-					$menu.openSection(item, submenu);
+					$menu.openSection(item);
 				});
 			}
 		});
 		
-		$menu.openSection = function(item, submenu) {
+		$menu.openSection = function(item) {
+			var submenu = item.children("ul");
+			if (!submenu.length)
+				return false;
+			
 			submenu.slideToggle(o.slideSpeed);
 			item.toggleClass(o.selectedClass);
 			
