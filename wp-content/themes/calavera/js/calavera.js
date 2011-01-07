@@ -27,6 +27,11 @@ if (!CALAVERA) {
 	
 	var debug = true;
 	
+	// for converting "Npx" to N
+	function px(str) {
+		return Number(str.substring(0, str.length - 2));
+	};
+	
 	if (debug && 
 		typeof console !== "undefined" &&
 		typeof console.debug !== "undefined") 
@@ -41,19 +46,13 @@ if (!CALAVERA) {
 		app.log = app.dump = function() {};
 	}
 	
+	app.config = {};
 	app.instances = {};
 	
-	app.parser = {
-		// convert "Npx" to N
-		px: function(str) {
-			return Number(str.substring(0, str.length - 2));
-		}
-	};
-	
-	app.menuSetup = function(selector, options) {
+	app.menu = function(selector, options) {
 		var $menu, o;
 		
-		app.log("app[menuSetup]");
+		app.log("app[menu]");
 		
 		o = $.extend({
 			selectedClass: "selected",
@@ -96,33 +95,33 @@ if (!CALAVERA) {
 		return $menu;
 	};
 	
-	app.videoSetup = function() {
+	app.config.videoSettings = {
+		controlsBelow: true,
+		controlsAtStart: true,
+		controlsHiding: false
+	};
+	
+	app.videos = function() {
 		var videos;
-		app.log("app[videoSetup]");
+		app.log("app[videos]");
 		videos = [];
 		$("video").each(function(i) {
-			var $v = $(this).VideoJS({
-				controlsBelow: true,
-				controlsAtStart: true,
-				controlsHiding: false,
-			});
-			$v.controller = function() {
+			var $v = $(this).VideoJS(app.config.videoSettings);
+			$v.player = function() {
 				return $v[0].player;
 			};
 			videos[i] = $v;
-			app.log("app[videoSetup] --> video instance");
 		});
 		return videos;
 	};
 	
-	app.videoNavigationSetup = function() {
-		app.log("app[videoNavigationSetup]");
+	app.scrollPane = function() {
+		app.log("app[scrollPane]");
 	};
 	
-	app.infiniteScrollSetup = function() {
-		app.log("app[infiniteScrollSetup]")
+	app.infiniteScroll = function() {
+		app.log("app[infiniteScroll]");
 	};
-	
 	
 }(CALAVERA, jQuery));
 

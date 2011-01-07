@@ -1,12 +1,16 @@
 <?php
 /**
- * index 
+ * home 
  *
  */
 get_header();
 ?>
-	
-		
+	<script type="text/javascript">
+		var ENVIRONMENT = {
+			features: [{ feature:"videos"}, { feature:"scrollPane" }]
+		};
+	</script>
+
 			<div class="rail">
 				<div class="hd">
 					<h1 class="logo graphic"><a href="<?php bloginfo('url'); ?>">
@@ -54,22 +58,26 @@ get_header();
 				</div>
 			</div>
 			<div class="main">
-				<?php if (have_posts()) : ?>
-					<?php while (have_posts()) : the_post(); ?>
-						<div class="box">
-							<?php if (is_page(CALAVERA_NEWS) || !is_page()) : ?>
-								<div class="hd">
-									<h2><?php the_title(); ?></h2>
-									<div class="meta">
-										<cite><?php the_date("F j, Y"); ?></cite>
-									</div>
-								</div>
-							<?php endif; ?>
-							<div class="bd">
-								<?php the_content(); ?>
-							</div>
+				<div class="box">
+					<div class="hd">
+						<h2>Death and the Blue-Eyed Boy</h2>
+						<div class="meta">
+							<cite>Director: Grant Curatola, Producer: Brett Potter</cite>
 						</div>
-					<?php endwhile; ?>
-				<?php endif; ?>
+					</div>
+					<div class="bd">
+						
+					</div>
+				</div>
+				<div class="scroll-controls">
+					<div class="graphic">
+						<a class="prev" href="">
+							<span>Up</span>
+						</a>
+						<a class="next" href="">
+							<span>Down</span>
+						</a>
+					</div>
+				</div>
 			</div>
 		<?php get_footer(); ?>

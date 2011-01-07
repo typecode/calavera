@@ -39,8 +39,8 @@ based on VideoJS TubeCSS Skin (http://videojs.com)
 .calavera-player .vjs-controls > div.vjs-volume-control     { display:none; }
 .calavera-player .vjs-controls > div.vjs-fullscreen-control { width:17px; right:0; }
 
-/* Play/Pause
--------------------------------------------------------------------------------- */
+/*----- Play/Pause -----*/
+
 .calavera-player .vjs-play-control { 
 	border-right:1px solid #ffcc00; 
 }
@@ -58,8 +58,8 @@ based on VideoJS TubeCSS Skin (http://videojs.com)
 .calavera-player.vjs-paused  .vjs-play-control:hover span { }
 .calavera-player.vjs-playing .vjs-play-control:hover span { }
 
-/* Progress
--------------------------------------------------------------------------------- */
+/*----- Progress -----*/
+
 .calavera-player .vjs-progress-holder { 
 	height:7px; margin:5px; 
 	border:0; background-color: #ffcc00; 
@@ -77,8 +77,8 @@ based on VideoJS TubeCSS Skin (http://videojs.com)
 	-webkit-border-radius:0; -moz-border-radius:0; border-radius:0; 
 }
 
-/* Fullscreen
--------------------------------------------------------------------------------- */
+/*----- Fullscreen -----*/
+
 .calavera-player .vjs-fullscreen-control {
 	border-left:1px solid #ffcc00; 
 }
@@ -119,8 +119,8 @@ based on VideoJS TubeCSS Skin (http://videojs.com)
 .vjs-fullscreen .vjs-fullscreen-control div span:nth-child(3) { border-top-width:4px; border-left-width:4px; }
 .vjs-fullscreen .vjs-fullscreen-control div span:nth-child(4) { border-top-width:4px; border-right-width:4px; }
 
-/* Big Play Button (at start)
----------------------------------------------------------*/
+/*----- Big Play Button (at start) -----*/
+
 .calavera-player div.vjs-big-play-button { 
 	width:50px; height:50px; margin:-25px 0 0 -25px;  
 	background:#000000; border:0; 
@@ -135,9 +135,11 @@ based on VideoJS TubeCSS Skin (http://videojs.com)
 	border-bottom:12px solid rgba(0,0,0,0);
 }
 
-/* Spinner Styles
----------------------------------------------------------*/
+/*----- Spinner Styles -----*/
 
+.calavera-player .vjs-spinner {
+	z-index:3;
+}
 .calavera-player .vjs-spinner div {
 	background: #ffcc00; border-color:#ffcc00; 
 }

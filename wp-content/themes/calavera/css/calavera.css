@@ -28,7 +28,8 @@ a:hover, a:active {
 }
 
 h2 {
-	line-height:.8; font-size:24px; font-weight:bold;
+	padding:2px 0 0; line-height:.8; 
+	font-size:24px; font-weight:bold;
 	border-bottom:1px solid #fecc00;
 }
 
@@ -116,28 +117,32 @@ a.more-link {
 	text-transform:uppercase; 
 }
 
+.page-template .main > .box {
+	width:394px;
+}
+
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-.pagination {
+.scroll-controls {
 	position:absolute; right:-16px; top:50px;
 }
-.pagination .controls {
+.scroll-controls > div {
 	position:fixed;
 }
-.pagination .controls > a {
+.scroll-controls > div > a {
 	width:14px; height:22px; padding:8px;
 	background-color:#000000; border-top:1px solid #fecc00;
 }
-.pagination .controls > a:first-child { 
+.scroll-controls > div > a:first-child {
 	border-top:0;
 }
-.pagination .prev { 
+.scroll-controls .prev {
 	background-image:url("../images/controlArrowUp.png");
 	border-top-left-radius:6px; border-top-right-radius:6px;
 	-moz-border-radius-topleft:6px; -moz-border-radius-topright:6px;
 	-webkit-border-top-left-radius:6px; -webkit-border-top-right-radius:6px;
 }
-.pagination .next { 
+.scroll-controls .next {
 	background-image:url("../images/controlArrowDown.png");
 	border-bottom-left-radius:6px; border-bottom-right-radius:6px;
 	-moz-border-radius-bottomleft:6px; -moz-border-radius-bottomright:6px;

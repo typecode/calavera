@@ -27,3 +27,5 @@
 		
 	<?php wp_head(); ?>	
 </head>
+<body class="<?php calavera_body_classes(); ?>">
+	<div class="wrap">
