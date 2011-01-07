@@ -14,7 +14,7 @@
 			$(function() {
 				app.log("document[ready]");
 
-				app.instances.menu = app.menu("#menu");
+				app.instances.menu = app.menu();
 				
 				if (typeof ENVIRONMENT === "object") {
 					if (typeof ENVIRONMENT.features === "object") {

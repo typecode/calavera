@@ -49,17 +49,18 @@ if (!CALAVERA) {
 	app.config = {};
 	app.instances = {};
 	
-	app.menu = function(selector, options) {
+	app.menu = function(options) {
 		var $menu, o;
 		
 		app.log("app[menu]");
 		
 		o = $.extend({
+			selector:"#menu",
 			selectedClass: "selected",
 			slideSpeed: 100
 		}, options);
 		
-		$menu = $(selector);
+		$menu = $(o.selector);
 		
 		// setting an explicit width, to insure that 
 		// expanding a section doesn't widen the menu
@@ -76,7 +77,9 @@ if (!CALAVERA) {
 		});
 		
 		$menu.toggleSection = function(section) {
-			var submenu = section.children("ul");
+			var submenu;
+			app.log("app[menu][toggleSection]");
+			submenu = section.children("ul");
 			if (!submenu.length)
 				return false;
 			
@@ -115,8 +118,34 @@ if (!CALAVERA) {
 		return videos;
 	};
 	
-	app.scrollPane = function() {
+	app.scrollPane = function(options) {
+		var $wrapper, o;
+		
 		app.log("app[scrollPane]");
+		
+		o = $.extend({
+			selector:"#scroll-pane"
+		}, options);
+		
+		$wrapper = $(o.selector);
+		
+		$wrapper.find(".scroll-controls").find(".prev").click(function(e) {
+			e.preventDefault();
+			$wrapper.goPrev();
+		}).end().find(".next").click(function(e) {
+			e.preventDefault();
+			$wrapper.goNext();
+		});
+		
+		$wrapper.goPrev = function() {
+			app.log("app[scrollPane][goPrev]");
+		};
+		
+		$wrapper.goNext = function() {
+			app.log("app[scrollPane][goNext]");
+		};
+		
+		return $wrapper;
 	};
 	
 	app.infiniteScroll = function() {

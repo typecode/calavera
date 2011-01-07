@@ -5,7 +5,16 @@
  */
 get_header();
 ?>
-	
+	<script type="text/javascript">
+		var ENVIRONMENT = {
+			features: []
+		};
+		<?php if (is_page(CALAVERA_NEWS)): ?>
+			ENVIRONMENT.features.push({
+				feature:"infiniteScroll"
+			});
+		<?php endif; ?>
+	</script>
 		
 			<div class="rail">
 				<div class="hd">

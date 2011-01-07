@@ -40,6 +40,10 @@ p:first-child {
 	padding-top:0; 
 }
 
+cite { 
+	font-style:normal;
+}
+
 .wrap { 
 	width:900px; margin:0 auto; text-align:left;
 }
@@ -105,10 +109,6 @@ p:first-child {
 	float:right; margin:37px 56px 37px 0;
 }
 
-.meta cite { 
-	font-style:normal; 
-}
-
 .main .box .hd { 
 	margin:0 0 16px; 
 }
@@ -122,6 +122,14 @@ a.more-link {
 }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+
+.scroll-pane {
+	overflow:hidden; height:565px; margin:0 0 10px;
+}
+
+.scroll-pane .holder {
+	
+}
 
 .scroll-controls {
 	position:absolute; right:-16px; top:50px;
@@ -149,3 +157,13 @@ a.more-link {
 	-webkit-border-bottom-left-radius:6px; -webkit-border-bottom-right-radius:6px;
 }
 
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+
+.main .footer {
+	padding:4px 0;
+	border-top:1px solid #fecc00;
+}
+.main .footer cite {
+	display:block; text-align:right;
+	font-size:9px; color:#f7a300;
+}
