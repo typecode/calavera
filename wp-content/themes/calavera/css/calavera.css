@@ -48,9 +48,9 @@ p:first-child {
 .rail {
 	position:fixed; margin:0 0 0 10px; padding:0 0 4px;
 	background-color:#000000;
+	border-bottom-left-radius:6px; border-bottom-right-radius:6px;
 	-moz-border-radius-bottomleft:6px; -moz-border-radius-bottomright:6px;
 	-webkit-border-bottom-left-radius:6px; -webkit-border-bottom-right-radius:6px;
-	border-bottom-left-radius:6px; border-bottom-right-radius:6px;
 }
 
 .logo a {
@@ -64,7 +64,10 @@ p:first-child {
 	margin:1px 0 0; 
 }
 .menu > li { 
-	border-top:1px solid #fecc00; 
+	border-top:1px solid #f7a300; 
+}
+.menu > li.page_item {
+	border-top-color:#fecc00;
 }
 .menu li > a { 
 	display:block; padding:4px 5px 2px; 
@@ -73,7 +76,11 @@ p:first-child {
 .menu > li > a { 
 	text-transform:uppercase; color:#f7a300; 
 }
+.menu > li.page_item > a {
+	color:#fecc00;
+}
 .menu > li > a:hover,
+.menu > li.page_item > a:hover,
 .menu > li.selected > a { 
 	color:#000000; background-color:#fcca29; 
 }
@@ -82,7 +89,11 @@ p:first-child {
 	display:none; padding:0 0 4px;
 	background-color:#fcca29; 
 }
-.menu > li > ul li { 
+.menu > li > ul li > a { 
+	margin:0 6px; padding-left:0; padding-bottom:0; line-height:1.3;
+	border-bottom:1px solid #000000; 
+}
+.menu > li > ul li:first-child { 
 	border-top:1px solid #f7a300; 
 }
 
@@ -112,18 +123,24 @@ a.more-link {
 }
 .pagination .controls {
 	position:fixed;
-	background-color:#000000;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
 }
 .pagination .controls > a {
 	width:14px; height:22px; padding:8px;
-	border-top:1px solid #fecc00;
+	background-color:#000000; border-top:1px solid #fecc00;
 }
 .pagination .controls > a:first-child { 
 	border-top:0;
 }
-.pagination .prev { background-image:url("../images/controlArrowUp.png"); }
-.pagination .next { background-image:url("../images/controlArrowDown.png"); }
+.pagination .prev { 
+	background-image:url("../images/controlArrowUp.png");
+	border-top-left-radius:6px; border-top-right-radius:6px;
+	-moz-border-radius-topleft:6px; -moz-border-radius-topright:6px;
+	-webkit-border-top-left-radius:6px; -webkit-border-top-right-radius:6px;
+}
+.pagination .next { 
+	background-image:url("../images/controlArrowDown.png");
+	border-bottom-left-radius:6px; border-bottom-right-radius:6px;
+	-moz-border-radius-bottomleft:6px; -moz-border-radius-bottomright:6px;
+	-webkit-border-bottom-left-radius:6px; -webkit-border-bottom-right-radius:6px;
+}
 

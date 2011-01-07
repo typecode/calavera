@@ -13,114 +13,131 @@
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-/*
-VideoJS TubeCSS Skin (http://videojs.com)
-Version 2.0.0
-*/
+/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-.tube-css .vjs-controls {
-  opacity: 1; color: #000;
-  height: 24px;
-  bottom: 0;
-  background-color: #ccc;
-  background: #fcfcfc -webkit-gradient(linear, left top, left bottom, from(#fcfcfc), to(#d0d0d0)) left top;
-  background: #fcfcfc -moz-linear-gradient(top,  #fcfcfc,  #d0d0d0) left top;
+Calavera Video Player Skin
+based on VideoJS TubeCSS Skin (http://videojs.com)
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+
+.calavera-player .vjs-controls {
+	height:18px; 
+	color:#ffcc00; 
+	background-color:#000000;
 }
 
-.tube-css .vjs-controls > div {
-  height: 23px; margin: 0; background: none; top: 0;
-  border: 1px solid #b1b1b1; border-left-color: #eee;
-  border-radius: 0; -webkit-border-radius: 0; -moz-border-radius: 0;
-  box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none;
+.calavera-player .vjs-controls > div { 
+	height:17px; top:0;
+	background:none; border-top:1px solid #ffcc00;
+	-moz-border-radius:0; -webkit-border-radius:0; border-radius:0;
+	-moz-box-shadow:none; -webkit-box-shadow:none; box-shadow:none;
 }
 
-/* Placement of Control Items */
-.tube-css .vjs-controls > div.vjs-play-control       { width: 25px; left: 0; }
-.tube-css .vjs-controls > div.vjs-progress-control   { left: 102px; right: 83px; }
-.tube-css .vjs-controls > div.vjs-time-control       { width: 75px; left: 27px; }
-.tube-css .vjs-controls > div.vjs-volume-control     { width: 50px; right: 30px; }
-.tube-css .vjs-controls > div.vjs-fullscreen-control { width: 30px; right: 0; }
-
-/* Removing borders on time & progress to join them */
-.tube-css .vjs-controls > div.vjs-progress-control { border-left: none; }
-.tube-css .vjs-controls > div.vjs-time-control { border-right: none; }
-
+.calavera-player .vjs-controls > div.vjs-play-control       { width:17px; left:0; }
+.calavera-player .vjs-controls > div.vjs-progress-control   { left:18px; right:18px; }
+.calavera-player .vjs-controls > div.vjs-time-control       { display:none; }
+.calavera-player .vjs-controls > div.vjs-volume-control     { display:none; }
+.calavera-player .vjs-controls > div.vjs-fullscreen-control { width:17px; right:0; }
 
 /* Play/Pause
 -------------------------------------------------------------------------------- */
-.tube-css .vjs-play-control { margin-left: 0; border-left-color: #b1b1b1; }
-.tube-css.vjs-paused  .vjs-play-control span { border-left-color: #333; border-top-width: 7px; border-left-width: 13px; border-bottom-width: 7px; margin: 5px 0 0 7px; }
-.tube-css.vjs-playing .vjs-play-control span { height: 14px; margin: 5px auto 0; border-left: 4px solid #333; border-right: 4px solid #333; }
-.tube-css.vjs-paused  .vjs-play-control:hover span { border-left-color: #CF1A1A; }
-.tube-css.vjs-playing .vjs-play-control:hover span { border-left-color: #CF1A1A; border-right-color: #CF1A1A; }
+.calavera-player .vjs-play-control { 
+	border-right:1px solid #ffcc00; 
+}
 
-/* Time Display
--------------------------------------------------------------------------------- */
-.tube-css .vjs-controls .vjs-time-control { font-size: 11px; }
-.tube-css .vjs-controls .vjs-time-control span { line-height: 25px; /* Centering vertically */ }
+.calavera-player.vjs-paused  .vjs-play-control span {
+	margin:5px; 
+	border-top-width:4px; border-left-width:8px; border-bottom-width:4px;
+	border-left-color:#ffcc00; 
+}
+.calavera-player.vjs-playing .vjs-play-control span { 
+	height:7px; margin:5px auto 0; 
+	border-left:3px solid #ffcc00; border-right:3px solid #ffcc00; 
+}
+
+.calavera-player.vjs-paused  .vjs-play-control:hover span { }
+.calavera-player.vjs-playing .vjs-play-control:hover span { }
 
 /* Progress
 -------------------------------------------------------------------------------- */
-.tube-css .vjs-progress-holder {
-  margin-right: 10px;
-  background-color: #b1b1b1;
-  background: #b1b1b1 -webkit-gradient(linear, left top, left bottom, from(#b1b1b1), to(#cacaca)) left top;
-  background: #b1b1b1 -moz-linear-gradient(top,  #b1b1b1,  #cacaca) left top;
-  border-color: #CACACA; border-bottom-color: #eaeaea;
-  border-radius: 0; -webkit-border-radius: 0; -moz-border-radius: 0;
+.calavera-player .vjs-progress-holder { 
+	height:7px; margin:5px; 
+	border:0; background-color: #ffcc00; 
+	border-radius:0; -webkit-border-radius:0; -moz-border-radius:0;
 }
-.tube-css .vjs-progress-control .vjs-load-progress { background: #C89191; border-radius: 0; -webkit-border-radius: 0; -moz-border-radius: 0; }
-.tube-css .vjs-progress-control .vjs-play-progress { background: #f33; background: -webkit-gradient(linear, left top, left bottom, from(#f33), to(#CF1A1A)); background: -moz-linear-gradient(top,  #f33,  #CF1A1A); -webkit-border-radius: 0; -moz-border-radius: 0; border-radius: 0; }
-
-/* Volume
--------------------------------------------------------------------------------- */
-.tube-css .vjs-volume-control div { padding: 3px 0 0 0; }
-.tube-css .vjs-volume-control div span { border-bottom-color: #ccc; }
-/* Volume icon color */
-.tube-css .vjs-volume-control div span.vjs-volume-level-on { border-color: #333; }
-/* Volume icon hovering color */
-.tube-css .vjs-volume-control:hover div span.vjs-volume-level-on { border-color: #CF1A1A; }
+.calavera-player .vjs-progres-holder > div { 
+	height:7px; 
+}
+.calavera-player .vjs-progress-control .vjs-load-progress { 
+	background:#ffcc00; 
+	border-radius:0; -webkit-border-radius:0; -moz-border-radius:0; 
+}
+.calavera-player .vjs-progress-control .vjs-play-progress { 
+	background:#ff9900; 
+	-webkit-border-radius:0; -moz-border-radius:0; border-radius:0; 
+}
 
 /* Fullscreen
 -------------------------------------------------------------------------------- */
-.tube-css .vjs-fullscreen-control div { margin: 4px 0 0 8px; }
-/* Fullscreen icon color */
-.tube-css .vjs-fullscreen-control div span:nth-child(3), .tube-css .vjs-fullscreen-control div span:nth-child(4), .tube-css.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(1), .tube-css.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(2) {
-  border-bottom-color: #333;
+.calavera-player .vjs-fullscreen-control {
+	border-left:1px solid #ffcc00; 
 }
-.tube-css .vjs-fullscreen-control div span:nth-child(1), .tube-css .vjs-fullscreen-control div span:nth-child(2), .tube-css.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(3), .tube-css.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(4) {
-  border-top-color: #333;
+.calavera-player .vjs-fullscreen-control div { 
+	margin:3px; width:auto; height:auto;
+}
+/* Fullscreen icon color */
+.calavera-player .vjs-fullscreen-control div span:nth-child(3), 
+.calavera-player .vjs-fullscreen-control div span:nth-child(4), 
+.calavera-player.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(1), 
+.calavera-player.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(2) { 
+	border-bottom-color: #ffcc00;
+}
+.calavera-player .vjs-fullscreen-control div span:nth-child(1), 
+.calavera-player .vjs-fullscreen-control div span:nth-child(2), 
+.calavera-player.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(3), 
+.calavera-player.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(4) { 
+	border-top-color: #ffcc00;
 }
 /* Fullscreen icon hovering color */
-.tube-css .vjs-fullscreen-control:hover div span:nth-child(3), .tube-css .vjs-fullscreen-control:hover div span:nth-child(4), .tube-css.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(1), .tube-css.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(2) {
-  border-bottom-color: #CF1A1A;
-}
-.tube-css .vjs-fullscreen-control:hover div span:nth-child(1), .tube-css .vjs-fullscreen-control:hover div span:nth-child(2), .tube-css.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(3), .tube-css.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(4) {
-  border-top-color: #CF1A1A;
-}
+.calavera-player .vjs-fullscreen-control:hover div span:nth-child(3), 
+.calavera-player .vjs-fullscreen-control:hover div span:nth-child(4), 
+.calavera-player.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(1), 
+.calavera-player.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(2) { }
+.calavera-player .vjs-fullscreen-control:hover div span:nth-child(1), 
+.calavera-player .vjs-fullscreen-control:hover div span:nth-child(2), 
+.calavera-player.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(3), 
+.calavera-player.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(4) { }
+
+.vjs-fullscreen-control div span:nth-child(1) { border-top-width:4px; border-right-width:4px; }
+.vjs-fullscreen-control div span:nth-child(2) { border-top-width:4px; border-left-width:4px; }
+.vjs-fullscreen-control div span:nth-child(3) { border-bottom-width:4px; border-right-width:4px; }
+.vjs-fullscreen-control div span:nth-child(4) { border-bottom-width:4px; border-left-width:4px; }
+
+/* Icon when video is in fullscreen mode */
+.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(1) { border-bottom-width:4px; border-left-width:4px; }
+.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(2) { border-bottom-width:4px; border-right-width:4px; }
+.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(3) { border-top-width:4px; border-left-width:4px; }
+.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(4) { border-top-width:4px; border-right-width:4px; }
 
 /* Big Play Button (at start)
 ---------------------------------------------------------*/
-.tube-css div.vjs-big-play-button { 
-  width: 84px; height: 58px; margin: -29px 0 0 -42px;
-  border: 2px solid #ccc; opacity: 0.9;
-  border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px;
-
-  /* CSS Background Gradients */
-  /* Default */ background-color: #333;
-  /* Webkit  */ background: #000 -webkit-gradient(linear, left top, left bottom, from(#000), to(#333)) left 29px;
-  /* Firefox */ background: #000 -moz-linear-gradient(top,  #000,  #333) left 29px;
-
-  /* CSS Shadows */
-  box-shadow: none; -webkit-box-shadow: none; -moz-box-shadow: none;
+.calavera-player div.vjs-big-play-button { 
+	width:50px; height:50px; margin:-25px 0 0 -25px;  
+	background:#000000; border:0; 
+	border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px;
+	box-shadow:none; -webkit-box-shadow:none; -moz-box-shadow:none;
 }
-.tube-css div.vjs-big-play-button:hover {
-  opacity: 1;
+.calavera-player div.vjs-big-play-button:hover { }
+.calavera-player div.vjs-big-play-button span { 
+	margin:13px auto; 
+	border-left:22px solid #ffcc00; 
+	border-top:12px solid rgba(0,0,0,0); 
+	border-bottom:12px solid rgba(0,0,0,0);
 }
-.tube-css div.vjs-big-play-button span {
-  margin: 11px 0 0 26px;
-  /* Drawing the play triangle with borders - http://www.infimum.dk/HTML/slantinfo.html */
-  border-left: 36px solid #fff; /* Width & Color of play icon */
-  /* Height of play icon is total top & bottom border widths. Color is transparent. */
-  border-top: 18px solid rgba(0,0,0,0); border-bottom: 18px solid rgba(0,0,0,0);
+
+/* Spinner Styles
+---------------------------------------------------------*/
+
+.calavera-player .vjs-spinner div {
+	background: #ffcc00; border-color:#ffcc00; 
 }

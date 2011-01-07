@@ -66,24 +66,24 @@ if (!CALAVERA) {
 		$menu.width( $menu.width() );
 		
 		$menu.children("li").each(function() {
-			var item = $(this);
-			if (item.children("ul").length === 1) {
-				item.children("a").click(function(e) {
+			var section = $(this);
+			if (section.children("ul").length === 1) {
+				section.children("a").click(function(e) {
 					e.preventDefault();
-					$menu.toggleSection(item);
+					$menu.toggleSection(section);
 				});
 			}
 		});
 		
-		$menu.toggleSection = function(item) {
-			var submenu = item.children("ul");
+		$menu.toggleSection = function(section) {
+			var submenu = section.children("ul");
 			if (!submenu.length)
 				return false;
 			
 			submenu.slideToggle(o.slideSpeed);
-			item.toggleClass(o.selectedClass);
+			section.toggleClass(o.selectedClass);
 			
-			item.siblings().each(function() {
+			section.siblings().each(function() {
 				var sib = $(this);
 				if (sib.hasClass(o.selectedClass)) {
 					sib.children("ul").slideUp(o.slideSpeed);
@@ -94,5 +94,23 @@ if (!CALAVERA) {
 		
 		return $menu;
 	};
-		
+	
+	app.videoSetup = function() {
+		app.log("app[videoSetup]");
+		app.instances.videos = [];
+		$("video").each(function(i) {
+			var $v = $(this).VideoJS({
+				preload: true,
+				controlsBelow: true,
+				controlsAtStart: true,
+				controlsHiding: false,
+			});
+			$v.controller = function() {
+				return $v[0].player;
+			};
+			app.instances.videos[i] = $v;
+		});
+	};
+	
 }(CALAVERA, jQuery));
+

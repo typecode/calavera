@@ -16,9 +16,7 @@ get_header();
 				</div>
 				<div class="bd">
 					<ul id="menu" class="menu">
-						<li><a href="">News</a></li>
-						<li><a href="">Contact</a></li>
-						<li><a href="">Info</a></li>
+						<?php wp_list_pages("title_li="); ?>
 						<li><a href="">Features</a></li>
 						<li>
 							<a href="">Shorts</a>
@@ -67,7 +65,7 @@ get_header();
 					<div class="bd">
 						
 						<!-- Begin VideoJS -->
-						  <div class="video-js-box tube-css">
+						  <div class="video-js-box calavera-player">
 						    <!-- Using the Video for Everybody Embed Code http://camendesign.com/code/video_for_everybody -->
 						    <video class="video-js" width="640" height="264" controls preload poster="http://video-js.zencoder.com/oceans-clip.png">
 						      <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
@@ -108,14 +106,14 @@ get_header();
 		<script type="text/javascript">
 			(function(app, $) {
 				
-				VideoJS.setupAllWhenReady();
+				
 
 				$(function() {
 					app.log("document[ready]");
 					
 					app.instances.menu = app.menu("#menu");
 					
-					
+					app.videoSetup();
 					
 				});
 
