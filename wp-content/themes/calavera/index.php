@@ -111,9 +111,9 @@ get_header();
 				$(function() {
 					app.log("document[ready]");
 					
-					app.instances.menu = app.menu("#menu");
+					app.instances.menu = app.menuSetup("#menu");
 					
-					app.videoSetup();
+					app.instances.videos = app.videoSetup();
 					
 				});
 

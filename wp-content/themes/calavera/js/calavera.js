@@ -15,7 +15,8 @@
 
 if (!CALAVERA) {
 	var CALAVERA = {
-		version: 0.1
+		version: 0.1,
+		name: "Calavera"
 	};
 }
 
@@ -49,10 +50,10 @@ if (!CALAVERA) {
 		}
 	};
 	
-	app.menu = function(selector, options) {
+	app.menuSetup = function(selector, options) {
 		var $menu, o;
 		
-		app.log("app[menu]");
+		app.log("app[menuSetup]");
 		
 		o = $.extend({
 			selectedClass: "selected",
@@ -96,11 +97,11 @@ if (!CALAVERA) {
 	};
 	
 	app.videoSetup = function() {
+		var videos;
 		app.log("app[videoSetup]");
-		app.instances.videos = [];
+		videos = [];
 		$("video").each(function(i) {
 			var $v = $(this).VideoJS({
-				preload: true,
 				controlsBelow: true,
 				controlsAtStart: true,
 				controlsHiding: false,
@@ -108,9 +109,20 @@ if (!CALAVERA) {
 			$v.controller = function() {
 				return $v[0].player;
 			};
-			app.instances.videos[i] = $v;
+			videos[i] = $v;
+			app.log("app[videoSetup] --> video instance");
 		});
+		return videos;
 	};
+	
+	app.videoNavigationSetup = function() {
+		app.log("app[videoNavigationSetup]");
+	};
+	
+	app.infiniteScrollSetup = function() {
+		app.log("app[infiniteScrollSetup]")
+	};
+	
 	
 }(CALAVERA, jQuery));
 
