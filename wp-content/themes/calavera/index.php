@@ -13,7 +13,9 @@ get_header();
 			ENVIRONMENT.features.push({
 				feature:"infiniteScroll"
 			});
+			
 		<?php endif; ?>
+		ENVIRONMENT.features.push({feature:"videos"});
 	</script>
 		
 			<div class="rail">

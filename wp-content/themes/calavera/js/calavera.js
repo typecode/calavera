@@ -32,6 +32,13 @@ if (!CALAVERA) {
 		return Number(str.substring(0, str.length - 2));
 	};
 	
+	function getSelectorFromHash(url) {
+		var buf = url.split("#");
+		if (buf.length > 1)
+			return "#" + buf[buf.length - 1];
+		return false;
+	};
+	
 	if (debug && 
 		typeof console !== "undefined" &&
 		typeof console.debug !== "undefined") 
@@ -41,13 +48,14 @@ if (!CALAVERA) {
 		};
 		app.dump = function(obj) {
 			console.log(obj);
-		}
+		};
 	} else {
 		app.log = app.dump = function() {};
 	}
 	
 	app.config = {};
 	app.instances = {};
+	app.events = $({});
 	
 	app.menu = function(options) {
 		var $menu, o;
@@ -119,33 +127,58 @@ if (!CALAVERA) {
 	};
 	
 	app.scrollPane = function(options) {
-		var $wrapper, o;
+		var $sp, scroll, o, scrollTo;
 		
 		app.log("app[scrollPane]");
 		
 		o = $.extend({
-			selector:"#scroll-pane"
+			selector:"#scroll-pane",
+			scrollSpeed: 100
 		}, options);
 		
-		$wrapper = $(o.selector);
+		$sp = $(o.selector);
+		scroll = $sp.children(".holder");
 		
-		$wrapper.find(".scroll-controls").find(".prev").click(function(e) {
+		scrollTo = function(y, callback) {
+			scroll.animate({
+				marginTop: y
+			}, 
+			o.scrollSpeed,
+			function() {
+				if ($.isFunction(callback))
+					callback();
+			});
+		};
+		
+		$sp.find(".scroll-controls").find(".prev").click(function(e) {
 			e.preventDefault();
-			$wrapper.goPrev();
+			$sp.goPrev();
 		}).end().find(".next").click(function(e) {
 			e.preventDefault();
-			$wrapper.goNext();
+			$sp.goNext();
 		});
 		
-		$wrapper.goPrev = function() {
+		$sp.goPrev = function() {
 			app.log("app[scrollPane][goPrev]");
 		};
 		
-		$wrapper.goNext = function() {
+		$sp.goNext = function() {
 			app.log("app[scrollPane][goNext]");
 		};
 		
-		return $wrapper;
+		$sp.goToItem = function(selector) {
+			var item;
+			app.log("app[scrollPane][goToItem]");
+			item = $(selector, scroll);
+			if (!item.length || item.length !== 1) {
+				return false;
+			}
+			scrollTo(-1*item.position().top, function() {
+				
+			});
+		};
+		
+		return $sp;
 	};
 	
 	app.infiniteScroll = function() {
