@@ -79,7 +79,7 @@ if (!CALAVERA) {
 		pageLocalItems = [];
 		
 		panelSelectedHandler = function(e, d) {
-			app.log("app[events][navigation.panelSelected]");
+			app.log("app[events][navigation.panelSelected]-->menu");
 			if (d && d.id) {				
 				$.each(pageLocalItems, function(i) {
 					var item, targetID, section;
@@ -209,14 +209,14 @@ if (!CALAVERA) {
 		};
 		
 		selectPanelHandler = function(e, d) {
-			app.log("app[events][navigation.selectPanel]");
+			app.log("app[events][navigation.selectPanel]-->scrollPane");
 			if (d && d.id) { $sp.goToID(d.id); }
 		};
 		
 		panels.each(function() {
-			var page = $(this);
-			page.height(panelHeight);
-			page.css("overflow", "hidden");
+			var panel = $(this);
+			panel.height(panelHeight);
+			panel.css("overflow", "hidden");
 		});
 		
 		app.events.bind("navigation.selectPanel", selectPanelHandler);
@@ -276,6 +276,7 @@ if (!CALAVERA) {
 			var $v = $(this).VideoJS(app.config.videoSettings);
 			
 			app.events.bind("navigation.panelSelected", function(e, d) {
+				app.log("app[events][navigation.panelSelected]-->video");
 				$v[0].player.pause();
 			});
 			

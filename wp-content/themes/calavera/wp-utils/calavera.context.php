@@ -35,7 +35,7 @@ function calavera_title($toEcho = true, $sep = '&larr;') {
 		$sc = wp_title( $sep, true, 'right' );
 	}
 	elseif (is_archive()) {
-		$sc = "Archive of: " . wp_title( '', false, 'right' ) . " $sep ";
+		$sc = wp_title( '', false, 'right' ) . " $sep ";
 	}
 	elseif (is_search()) {
 		global $s;

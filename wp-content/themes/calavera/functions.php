@@ -9,8 +9,12 @@ define("CALAVERA_NEWS", "news");
 define("CALAVERA_NEWS_CAT", "news");
 
 /*----- Utils -----*/
-require_once(TEMPLATEPATH . '/wp-utils/context.php');
-require_once(TEMPLATEPATH . '/wp-utils/filters.php');
+require_once(TEMPLATEPATH . '/wp-utils/calavera.context.php');
+
+function remove_generator_link() { 
+	return ""; 
+}
+add_filter("the_generator", "remove_generator_link", 1);
 
 /*----- Video listing and display -----*/
 
