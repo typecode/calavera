@@ -81,6 +81,10 @@ cite {
 .menu > li > a { 
 	text-transform:uppercase; color:#f7a300; 
 }
+.menu > li.section-start > a {
+	margin:1px 0 0;
+	border-top:1px solid #f7a300;
+}
 .menu > li.page_item > a {
 	color:#fecc00;
 }
@@ -109,6 +113,9 @@ cite {
 	float:right; margin:37px 56px 37px 0;
 }
 
+.main .box {
+	margin:0 0 24px;
+}
 .main .box .hd { 
 	margin:0 0 16px; 
 }

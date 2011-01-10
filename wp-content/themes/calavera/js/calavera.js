@@ -74,6 +74,8 @@ if (!CALAVERA) {
 		}, options);
 		
 		$menu = $(o.selector).eq(0);
+		// array containing jQuery objects of the menu items 
+		// that "link" to elements on the current page:
 		pageLocalItems = [];
 		
 		panelSelectedHandler = function(e, d) {
@@ -99,7 +101,7 @@ if (!CALAVERA) {
 		};
 		
 		// setting an explicit width, to insure that 
-		// expanding a section doesn't widen the menu
+		// expanding a section doesn't widen the menu:
 		$menu.width( $menu.width() );
 		
 		$menu.children("li").each(function() {
@@ -158,10 +160,10 @@ if (!CALAVERA) {
 	
 	app.scrollPane = function(options) {
 		var $sp,
-			scroll, 
-			panels, 
+			scroll,
+			panels,
+			panelHeight,
 			currentIndex,
-			panelHeight, 
 			goToIndex,
 			selectPanelHandler,
 			o;
@@ -170,46 +172,54 @@ if (!CALAVERA) {
 		
 		o = $.extend({
 			selector:"#scroll-pane",
-			scrollSpeed: 100,
+			scrollSpeed: 200,
 			startIndex: 0
 		}, options);
 		
 		$sp = $(o.selector).eq(0);
-		panelHeight = $sp.height();
 		scroll = $sp.children(".holder").eq(0);
 		panels = scroll.children();
-		panels.each(function() {
-			var page = $(this);
-			page.height(panelHeight);
-			page.css("overflow", "hidden");
-		});
+		panelHeight = $sp.height();
 		currentIndex = o.startIndex;
 		
 		goToIndex = function(index) {
-			var panel;
 			if (index < 0) { index = panels.length - 1; }
 			else if (index > panels.length - 1) { index = 0; }
-			scroll.animate({ marginTop: -1*panelHeight*index }, o.scrollSpeed, function() {
-				currentIndex = index;
-				panels.each(function(i) {
-					if (i === currentIndex) {
+			scroll.animate(
+				{ marginTop: -1*panelHeight*index }, 
+				o.scrollSpeed, 
+				function() {
+					currentIndex = index;
+					panels.each(function(i) {
+						var panel, panelID;
 						panel = panels.eq(i);
-						panel.addClass(app.config.selectedClass);
-						location.hash = panel.attr("id");
-						app.events.trigger("navigation.panelSelected", {
-							id: panel.attr("id")
-						});
-					} else {
-						panels.eq(i).removeClass(app.config.selectedClass);
-					}
-				});
-			});
+						if (i === currentIndex) {
+							panel.addClass(app.config.selectedClass);
+							panelID = panel.attr("id");
+							location.hash = panelID;
+							app.events.trigger("navigation.panelSelected", {
+								id: panelID
+							});
+						} else {
+							panel.removeClass(app.config.selectedClass);
+						}
+					});
+				}
+			);
 		};
 		
 		selectPanelHandler = function(e, d) {
 			app.log("app[events][navigation.selectPanel]");
 			if (d && d.id) { $sp.goToID(d.id); }
 		};
+		
+		panels.each(function() {
+			var page = $(this);
+			page.height(panelHeight);
+			page.css("overflow", "hidden");
+		});
+		
+		app.events.bind("navigation.selectPanel", selectPanelHandler);
 		
 		$sp.find(".scroll-controls").find(".prev").click(function(e) {
 			e.preventDefault();
@@ -219,7 +229,9 @@ if (!CALAVERA) {
 			$sp.goNext();
 		});
 		
-		app.events.bind("navigation.selectPanel", selectPanelHandler);
+		$sp.goToFirst = function() {
+			goToIndex(o.startIndex);
+		};
 		
 		$sp.goPrev = function() {
 			app.log("app[scrollPane][goPrev]");
@@ -240,7 +252,7 @@ if (!CALAVERA) {
 			});
 			return $sp;
 		};
-		
+				
 		return $sp;
 	};
 		
@@ -260,9 +272,11 @@ if (!CALAVERA) {
 		videos = [];
 		$("video").each(function(i) {
 			var $v = $(this).VideoJS(app.config.videoSettings);
-			$v.player = function() {
-				return $v[0].player;
-			};
+			
+			app.events.bind("navigation.panelSelected", function(e, d) {
+				$v[0].player.pause();
+			});
+			
 			videos[i] = $v;
 		});
 		return videos;
@@ -270,7 +284,7 @@ if (!CALAVERA) {
 	
 	$(function() {
 		app.log("document[ready]");
-
+		
 		app.instances.menu = app.menu();
 		
 		if (typeof ENVIRONMENT === "object") {
@@ -288,6 +302,8 @@ if (!CALAVERA) {
 			app.events.trigger("navigation.selectPanel", {
 				id: location.hash.substring(1)
 			});
+		} else if (app.instances.scrollPane) {
+			app.instances.scrollPane.goToFirst();
 		}
 	});
 	
