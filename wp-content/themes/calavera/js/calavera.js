@@ -27,21 +27,22 @@ if (!CALAVERA) {
 	
 	var debug = true;
 	
-	// for converting "Npx" to N
-	function px(str) {
-		return Number(str.substring(0, str.length - 2));
-	};
-	
 	function getSelectorFromHash(url) {
 		var buf = url.split("#");
-		if (buf.length > 1)
-			return "#" + buf[buf.length - 1];
+		if (buf.length > 1) { return "#" + buf[buf.length - 1]; }
 		return false;
+	};
+	
+	function selectFromURL(url) {
+		var selector, element;
+		selector = getSelectorFromHash(url);
+		element = $(selector);
+		return element.length ? element : false;
 	};
 	
 	if (debug && 
 		typeof console !== "undefined" &&
-		typeof console.debug !== "undefined") 
+		typeof console.debug !== "undefined")
 	{
 		app.log = function(message, level) {
 			console[level || "info"](message);
@@ -53,57 +54,198 @@ if (!CALAVERA) {
 		app.log = app.dump = function() {};
 	}
 	
-	app.config = {};
+	app.config = {
+		selectedClass: "selected"
+	};
 	app.instances = {};
 	app.events = $({});
 	
 	app.menu = function(options) {
-		var $menu, o;
+		var $menu, 
+			pageLocalItems,
+			panelSelectedHandler,
+			o;
 		
 		app.log("app[menu]");
 		
 		o = $.extend({
 			selector:"#menu",
-			selectedClass: "selected",
 			slideSpeed: 100
 		}, options);
 		
-		$menu = $(o.selector);
+		$menu = $(o.selector).eq(0);
+		pageLocalItems = [];
+		
+		panelSelectedHandler = function(e, d) {
+			app.log("app[events][navigation.panelSelected]");
+			if (d && d.id) {				
+				$.each(pageLocalItems, function(i) {
+					var item, targetID, section;
+					item = pageLocalItems[i];
+					targetID = item.data("targetID");
+					if (targetID) {
+						if (targetID === d.id) {
+							item.addClass(app.config.selectedClass);
+							section = item.data("section");
+							if (section && !section.hasClass(app.config.selectedClass)) {
+								$menu.toggleSection(section);
+							}
+						} else {
+							item.removeClass(app.config.selectedClass);
+						}
+					}
+				});
+			}
+		};
 		
 		// setting an explicit width, to insure that 
 		// expanding a section doesn't widen the menu
 		$menu.width( $menu.width() );
 		
 		$menu.children("li").each(function() {
-			var section = $(this);
-			if (section.children("ul").length === 1) {
+			var section = $(this), submenu;
+			section = $(this);
+			submenu = section.children("ul");
+			if (submenu.length === 1) {
 				section.children("a").click(function(e) {
 					e.preventDefault();
 					$menu.toggleSection(section);
 				});
+				submenu.children("li").each(function() {
+					$(this).children("a").each(function() {
+						var link, target, targetID;
+						link = $(this);
+						target = selectFromURL( link.attr("href") );
+						if (target) {
+							targetID = target.attr("id");
+							link.data("targetID", targetID);
+							link.data("section", section);
+							pageLocalItems.push(link);
+							link.click(function(e) {
+								e.preventDefault();
+								app.events.trigger("navigation.selectPanel", {
+									id: targetID
+								});
+							});
+						}
+					});
+				});
 			}
 		});
+		
+		app.events.bind("navigation.panelSelected", panelSelectedHandler);
 		
 		$menu.toggleSection = function(section) {
 			var submenu;
 			app.log("app[menu][toggleSection]");
 			submenu = section.children("ul");
-			if (!submenu.length)
-				return false;
+			if (!submenu.length === 1) { return false; }
 			
 			submenu.slideToggle(o.slideSpeed);
-			section.toggleClass(o.selectedClass);
+			section.toggleClass(app.config.selectedClass);
 			
 			section.siblings().each(function() {
 				var sib = $(this);
-				if (sib.hasClass(o.selectedClass)) {
+				if (sib.hasClass(app.config.selectedClass)) {
 					sib.children("ul").slideUp(o.slideSpeed);
-					sib.removeClass(o.selectedClass);
+					sib.removeClass(app.config.selectedClass);
 				}
 			});
 		};
 		
 		return $menu;
+	};
+	
+	app.scrollPane = function(options) {
+		var $sp,
+			scroll, 
+			panels, 
+			currentIndex,
+			panelHeight, 
+			goToIndex,
+			selectPanelHandler,
+			o;
+		
+		app.log("app[scrollPane]");
+		
+		o = $.extend({
+			selector:"#scroll-pane",
+			scrollSpeed: 100,
+			startIndex: 0
+		}, options);
+		
+		$sp = $(o.selector).eq(0);
+		panelHeight = $sp.height();
+		scroll = $sp.children(".holder").eq(0);
+		panels = scroll.children();
+		panels.each(function() {
+			var page = $(this);
+			page.height(panelHeight);
+			page.css("overflow", "hidden");
+		});
+		currentIndex = o.startIndex;
+		
+		goToIndex = function(index) {
+			var panel;
+			if (index < 0) { index = panels.length - 1; }
+			else if (index > panels.length - 1) { index = 0; }
+			scroll.animate({ marginTop: -1*panelHeight*index }, o.scrollSpeed, function() {
+				currentIndex = index;
+				panels.each(function(i) {
+					if (i === currentIndex) {
+						panel = panels.eq(i);
+						panel.addClass(app.config.selectedClass);
+						location.hash = panel.attr("id");
+						app.events.trigger("navigation.panelSelected", {
+							id: panel.attr("id")
+						});
+					} else {
+						panels.eq(i).removeClass(app.config.selectedClass);
+					}
+				});
+			});
+		};
+		
+		selectPanelHandler = function(e, d) {
+			app.log("app[events][navigation.selectPanel]");
+			if (d && d.id) { $sp.goToID(d.id); }
+		};
+		
+		$sp.find(".scroll-controls").find(".prev").click(function(e) {
+			e.preventDefault();
+			$sp.goPrev();
+		}).end().find(".next").click(function(e) {
+			e.preventDefault();
+			$sp.goNext();
+		});
+		
+		app.events.bind("navigation.selectPanel", selectPanelHandler);
+		
+		$sp.goPrev = function() {
+			app.log("app[scrollPane][goPrev]");
+			goToIndex( currentIndex - 1 );
+			return $sp;
+		};
+		
+		$sp.goNext = function() {
+			app.log("app[scrollPane][goNext]");	
+			goToIndex( currentIndex + 1 );
+			return $sp;
+		};
+		
+		$sp.goToID = function(id) {
+			app.log("app[scrollPane][selectAndGo]");
+			panels.each(function(i) {
+				if ($(this).attr("id") === id) { goToIndex(i); }
+			});
+			return $sp;
+		};
+		
+		return $sp;
+	};
+		
+	app.infiniteScroll = function() {
+		app.log("app[infiniteScroll]");
 	};
 	
 	app.config.videoSettings = {
@@ -126,64 +268,32 @@ if (!CALAVERA) {
 		return videos;
 	};
 	
-	app.scrollPane = function(options) {
-		var $sp, scroll, o, scrollTo;
+	$(function() {
+		app.log("document[ready]");
+
+		app.instances.menu = app.menu();
 		
-		app.log("app[scrollPane]");
-		
-		o = $.extend({
-			selector:"#scroll-pane",
-			scrollSpeed: 100
-		}, options);
-		
-		$sp = $(o.selector);
-		scroll = $sp.children(".holder");
-		
-		scrollTo = function(y, callback) {
-			scroll.animate({
-				marginTop: y
-			}, 
-			o.scrollSpeed,
-			function() {
-				if ($.isFunction(callback))
-					callback();
-			});
-		};
-		
-		$sp.find(".scroll-controls").find(".prev").click(function(e) {
-			e.preventDefault();
-			$sp.goPrev();
-		}).end().find(".next").click(function(e) {
-			e.preventDefault();
-			$sp.goNext();
-		});
-		
-		$sp.goPrev = function() {
-			app.log("app[scrollPane][goPrev]");
-		};
-		
-		$sp.goNext = function() {
-			app.log("app[scrollPane][goNext]");
-		};
-		
-		$sp.goToItem = function(selector) {
-			var item;
-			app.log("app[scrollPane][goToItem]");
-			item = $(selector, scroll);
-			if (!item.length || item.length !== 1) {
-				return false;
+		if (typeof ENVIRONMENT === "object") {
+			if (typeof ENVIRONMENT.features === "object") {
+				$.each(ENVIRONMENT.features, function(i) {
+					if ($.isFunction(app[ENVIRONMENT.features[i].feature])) {
+						app.instances[ENVIRONMENT.features[i].feature] = 
+							app[ENVIRONMENT.features[i].feature](ENVIRONMENT.features[i].options || null);
+					}
+				});
 			}
-			scrollTo(-1*item.position().top, function() {
-				
-			});
-		};
+		}
 		
-		return $sp;
-	};
-	
-	app.infiniteScroll = function() {
-		app.log("app[infiniteScroll]");
-	};
+		if (app.instances.scrollPane) {
+			(function() {
+				if (location.hash) {
+					app.events.trigger("navigation.selectPanel", {
+						id: location.hash
+					});
+				}
+			}());
+		}
+	});
 	
 }(CALAVERA, jQuery));
 

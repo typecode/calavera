@@ -127,9 +127,8 @@ a.more-link {
 	overflow:hidden; height:565px; margin:0 0 10px;
 }
 
-.scroll-pane .holder {
-	
-}
+.scroll-pane .holder { }
+.scroll-pane .holder > div { }
 
 .scroll-controls {
 	position:absolute; right:-16px; top:50px;
@@ -143,6 +142,9 @@ a.more-link {
 }
 .scroll-controls > div > a:first-child {
 	border-top:0;
+}
+.scroll-controls > div > a:hover {
+
 }
 .scroll-controls .prev {
 	background-image:url("../images/controlArrowUp.png");
