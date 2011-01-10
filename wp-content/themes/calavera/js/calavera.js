@@ -230,7 +230,9 @@ if (!CALAVERA) {
 		});
 		
 		$sp.goToFirst = function() {
+			app.log("app[scrollPane][goToFirst]");
 			goToIndex(o.startIndex);
+			return $sp;
 		};
 		
 		$sp.goPrev = function() {
@@ -298,12 +300,14 @@ if (!CALAVERA) {
 			}
 		}
 		
-		if (location.hash) {
-			app.events.trigger("navigation.selectPanel", {
-				id: location.hash.substring(1)
-			});
-		} else if (app.instances.scrollPane) {
-			app.instances.scrollPane.goToFirst();
+		if (app.instances.scrollPane) {
+			if (location.hash) {
+				app.events.trigger("navigation.selectPanel", {
+					id: location.hash.substring(1)
+				});
+			} else {
+				app.instances.scrollPane.goToFirst();
+			}
 		}
 	});
 	
