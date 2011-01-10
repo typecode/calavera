@@ -284,14 +284,10 @@ if (!CALAVERA) {
 			}
 		}
 		
-		if (app.instances.scrollPane) {
-			(function() {
-				if (location.hash) {
-					app.events.trigger("navigation.selectPanel", {
-						id: location.hash
-					});
-				}
-			}());
+		if (location.hash) {
+			app.events.trigger("navigation.selectPanel", {
+				id: location.hash.substring(1)
+			});
 		}
 	});
 	
