@@ -139,7 +139,7 @@ a.more-link {
 }
 
 .scroll-pane .holder { }
-.scroll-pane .holder > div { }
+.scroll-pane .holder > div { overflow:hidden; height:565px; }
 
 .scroll-controls {
 	position:absolute; right:-16px; top:50px;

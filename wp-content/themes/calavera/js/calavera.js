@@ -212,13 +212,7 @@ if (!CALAVERA) {
 			app.log("app[scrollPane][selectPanelHandler]");
 			if (d && d.id) { $sp.goToID(d.id); }
 		};
-		
-		panels.each(function() {
-			var panel = $(this);
-			panel.height(panelHeight);
-			panel.css("overflow", "hidden");
-		});
-		
+			
 		app.events.bind("navigation.selectPanel", selectPanelHandler);
 		
 		$sp.find(".scroll-controls").find(".prev").click(function(e) {
