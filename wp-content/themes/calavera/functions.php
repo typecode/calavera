@@ -22,9 +22,10 @@ function generateVideoHash($title) {
 	return str_replace(" ", "", $title);
 }
 
+$videos = get_category_by_slug('videos');
 $videoSections = get_categories(array(
 	'orderby' => 'id',
-	'parent' => get_category_by_slug('videos')->term_id
+	'parent' => $videos->term_id
 ));
 
 function calavera_videos_menu() {
@@ -68,7 +69,7 @@ function calavera_videos_main() {
 		foreach ($videos as $video) {
 			$title = $video->post_title;
 			$output .= "<div id='" . generateVideoHash($title) . "' class='box'>";
-			$output .= "<div class='hd'><h2>" . $title . "</h2></div>";
+			$output .= "<div class='hd'><h2>" . $title . "</h2><div class='meta'>Director: ---, Producer: ---</div></div>";
 			$output .= "<div class='bd'>" 
 				. str_replace(']]>', ']]&gt', apply_filters('the_content', $video->post_content)) 
 			. "</div>";

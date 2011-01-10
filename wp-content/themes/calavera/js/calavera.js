@@ -79,7 +79,7 @@ if (!CALAVERA) {
 		pageLocalItems = [];
 		
 		panelSelectedHandler = function(e, d) {
-			app.log("app[events][navigation.panelSelected]-->menu");
+			app.log("app[menu][panelSelectedHandler]");
 			if (d && d.id) {				
 				$.each(pageLocalItems, function(i) {
 					var item, targetID, section;
@@ -209,7 +209,7 @@ if (!CALAVERA) {
 		};
 		
 		selectPanelHandler = function(e, d) {
-			app.log("app[events][navigation.selectPanel]-->scrollPane");
+			app.log("app[scrollPane][selectPanelHandler]");
 			if (d && d.id) { $sp.goToID(d.id); }
 		};
 		
@@ -276,7 +276,7 @@ if (!CALAVERA) {
 			var $v = $(this).VideoJS(app.config.videoSettings);
 			
 			app.events.bind("navigation.panelSelected", function(e, d) {
-				app.log("app[events][navigation.panelSelected]-->video");
+				app.log("app[videos][panelSelectedHandler]");
 				$v[0].player.pause();
 			});
 			
