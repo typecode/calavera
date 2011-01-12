@@ -55,8 +55,9 @@ based on VideoJS TubeCSS Skin (http://videojs.com)
 	border-left:3px solid #ffcc00; border-right:3px solid #ffcc00; 
 }
 
-.calavera-player.vjs-paused  .vjs-play-control:hover span { }
-.calavera-player.vjs-playing .vjs-play-control:hover span { }
+.calavera-player .vjs-controls > div.vjs-play-control:hover { background-color:#ffcc00; }
+.calavera-player.vjs-paused  .vjs-play-control:hover span { background-color:#ffcc00; border-left-color:#000000; }
+.calavera-player.vjs-playing .vjs-play-control:hover span { border-color:#000000; }
 
 /*----- Progress -----*/
 
@@ -85,7 +86,7 @@ based on VideoJS TubeCSS Skin (http://videojs.com)
 .calavera-player .vjs-fullscreen-control div { 
 	margin:3px; width:auto; height:auto;
 }
-/* Fullscreen icon color */
+/* icon color */
 .calavera-player .vjs-fullscreen-control div span:nth-child(3), 
 .calavera-player .vjs-fullscreen-control div span:nth-child(4), 
 .calavera-player.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(1), 
@@ -98,22 +99,26 @@ based on VideoJS TubeCSS Skin (http://videojs.com)
 .calavera-player.vjs-fullscreen .vjs-fullscreen-control div span:nth-child(4) { 
 	border-top-color: #ffcc00;
 }
-/* Fullscreen icon hovering color */
+/* icon hovering color */
+.calavera-player .vjs-fullscreen-control:hover { background-color:#ffcc00; }
+
 .calavera-player .vjs-fullscreen-control:hover div span:nth-child(3), 
 .calavera-player .vjs-fullscreen-control:hover div span:nth-child(4), 
 .calavera-player.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(1), 
-.calavera-player.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(2) { }
+.calavera-player.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(2) { border-bottom-color:#000000; }
+
 .calavera-player .vjs-fullscreen-control:hover div span:nth-child(1), 
 .calavera-player .vjs-fullscreen-control:hover div span:nth-child(2), 
 .calavera-player.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(3), 
-.calavera-player.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(4) { }
+.calavera-player.vjs-fullscreen .vjs-fullscreen-control:hover div span:nth-child(4) { border-top-color:#000000; }
 
+/* icon shape */
 .vjs-fullscreen-control div span:nth-child(1) { border-top-width:4px; border-right-width:4px; }
 .vjs-fullscreen-control div span:nth-child(2) { border-top-width:4px; border-left-width:4px; }
 .vjs-fullscreen-control div span:nth-child(3) { border-bottom-width:4px; border-right-width:4px; }
 .vjs-fullscreen-control div span:nth-child(4) { border-bottom-width:4px; border-left-width:4px; }
 
-/* Icon when video is in fullscreen mode */
+/* icon shape when video is in fullscreen mode */
 .vjs-fullscreen .vjs-fullscreen-control div span:nth-child(1) { border-bottom-width:4px; border-left-width:4px; }
 .vjs-fullscreen .vjs-fullscreen-control div span:nth-child(2) { border-bottom-width:4px; border-right-width:4px; }
 .vjs-fullscreen .vjs-fullscreen-control div span:nth-child(3) { border-top-width:4px; border-left-width:4px; }
@@ -127,13 +132,14 @@ based on VideoJS TubeCSS Skin (http://videojs.com)
 	border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px;
 	box-shadow:none; -webkit-box-shadow:none; -moz-box-shadow:none;
 }
-.calavera-player div.vjs-big-play-button:hover { }
+.calavera-player div.vjs-big-play-button:hover { background-color:#ffcc00; }
 .calavera-player div.vjs-big-play-button span { 
 	margin:13px auto; 
 	border-left:22px solid #ffcc00; 
 	border-top:12px solid rgba(0,0,0,0); 
 	border-bottom:12px solid rgba(0,0,0,0);
 }
+.calavera-player div.vjs-big-play-button:hover span { border-left-color:#000000; }
 
 /*----- Spinner Styles -----*/
 
