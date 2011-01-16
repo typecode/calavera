@@ -34,12 +34,12 @@ $moreText = "Read more";
 					<div class="hd">
 						<h2><?php the_title(); ?></h2>
 						<div class="meta">
-							<cite><?php the_date("F j, Y"); ?></cite>
+							<cite><?php the_time( get_option("date_format") ); ?></cite>
 						</div>
 					</div>
 					<div class="bd">
 						<?php
-							if (strpos($post->post_content, '<!--more-->')) {
+							if (strpos($post->post_content, "<!--more-->")) {
 								global $more;
 								
 								$more = 0;

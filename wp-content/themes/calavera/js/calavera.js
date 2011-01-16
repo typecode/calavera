@@ -324,12 +324,12 @@ if (!CALAVERA) {
 		
 		posts = [];
 		
-		setupBlogPost = function(p) {
+		setupBlogPost = function(bp) {
 			var moreLink, 
 				part2, 
 				isExpanded;
-			moreLink = p.find(o.moreLinkSelector);
-			part2 = p.find(o.tailSelector);
+			moreLink = bp.find(o.moreLinkSelector);
+			part2 = bp.find(o.tailSelector);
 			if (moreLink.length === 1) {
 				if (part2.length === 1) {
 					moreLink.click(function(e) {
@@ -348,7 +348,7 @@ if (!CALAVERA) {
 					});
 				}
 			}
-			return p;
+			return bp;
 		};
 		
 		$(o.selector).each(function(i) {

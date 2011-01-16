@@ -62,20 +62,41 @@ function calavera_videos_menu() {
 }
 
 function calavera_videos_main() {
-	$output = "";
 	global $videoSections;
+	$output = "";
+	
 	foreach ($videoSections as $section) {
 		$videos = get_posts(array(
 			'category' => $section->term_id
 		));
 		foreach ($videos as $video) {
+			$id = $video->ID;
 			$title = $video->post_title;
+			
 			$output .= "<div id='" . generateVideoHash($title) . "' class='box'>";
-			$output .= "<div class='hd'><h2>" . $title . "</h2><div class='meta'>Director: ---, Producer: ---</div></div>";
+			$output .= "<div class='hd'>"; 
+			$output .= "<h2>" . $title . "</h2>";
+			
+			$director = get_post_meta($id, "director", true);
+			$producer = get_post_meta($id, "producer", true);
+			
+			$output .= "<div class='meta'>";
+			if ($director) {
+				$output .= "Director: " . $director;
+			}
+			if ($producer) {
+				if ($director) {
+					$output .= ", ";
+				}
+				$output .= "Producer: " . $producer;
+			}
+			$output .= "</div>"; //end .meta
+			$output .= "</div>"; //end .hd
+			
 			$output .= "<div class='bd'>" 
 				. str_replace(']]>', ']]&gt', apply_filters('the_content', $video->post_content)) 
 			. "</div>";
-			$output .= "</div>";
+			$output .= "</div>"; //end .box
 		}
 	}
 	echo $output;
