@@ -14,6 +14,8 @@
 	<div class="bd">
 		<ul id="menu" class="menu">
 			<?php 
+				global $news_id;
+				wp_list_categories("title_li=&include=$news_id");
 				wp_list_pages("title_li="); 
 				calavera_videos_menu();
 			?>

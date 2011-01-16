@@ -4,17 +4,19 @@
  *
  */
 
-// slugs to identify the "news" page and category
-define("CALAVERA_NEWS", "news");
-define("CALAVERA_NEWS_CAT", "news");
-
 /*----- Utils -----*/
+
 require_once(TEMPLATEPATH . '/wp-utils/calavera.context.php');
 
 function remove_generator_link() { 
 	return ""; 
 }
 add_filter("the_generator", "remove_generator_link", 1);
+
+/*----- News -----*/
+
+$news_slug = get_category_by_slug('news');
+$news_id = $news_slug->term_id;
 
 /*----- Video listing and display -----*/
 

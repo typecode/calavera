@@ -11,6 +11,7 @@
          Y8b d88P 888                                                                
           "Y88P"  888
 
+	lev@typeslashcode.com
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
 if (!CALAVERA) {
@@ -25,22 +26,11 @@ if (!CALAVERA) {
 
 (function(app, $) {
 	
-	var debug = true;
-	
-	function getSelectorFromHash(url) {
-		var buf = url.split("#");
-		if (buf.length > 1) { return "#" + buf[buf.length - 1]; }
-		return false;
+	var config = {
+		debug: true
 	};
 	
-	function selectFromURL(url) {
-		var selector, element;
-		selector = getSelectorFromHash(url);
-		element = $(selector);
-		return element.length ? element : false;
-	};
-	
-	if (debug && 
+	if (config.debug && 
 		typeof console !== "undefined" &&
 		typeof console.debug !== "undefined")
 	{
@@ -54,11 +44,40 @@ if (!CALAVERA) {
 		app.log = app.dump = function() {};
 	}
 	
-	app.config = {
-		selectedClass: "selected"
+	function setupApplicationFeatures(environment) {
+		function makeFeature(o) {
+			if (app.instances[o.feature]) {
+				
+			} else if (typeof app[o.feature] === "function") {
+				app.instances[o.feature] = app[o.feature](o.options);
+			}
+		};
+
+		if (typeof environment.features === "object") {
+			$.each(environment.features, function(i) { 
+				makeFeature(environment.features[i]);
+			});
+		}
 	};
+	
+	function getSelectorFromHash(url) {
+		var buf = url.split("#");
+		if (buf.length > 1) { return "#" + buf[buf.length - 1]; }
+		return false;
+	};
+	
+	function selectFromURL(url) {
+		var selector, element;
+		selector = getSelectorFromHash(url);
+		if (!selector) { return false; }
+		element = $(selector);
+		return element.length ? element : false;
+	};
+	
 	app.instances = {};
 	app.events = $({});
+	
+	config.selectedClass = "selected";
 	
 	app.menu = function(options) {
 		var $menu, 
@@ -87,13 +106,13 @@ if (!CALAVERA) {
 					targetID = item.data("targetID");
 					if (targetID) {
 						if (targetID === d.id) {
-							item.addClass(app.config.selectedClass);
+							item.addClass(config.selectedClass);
 							section = item.data("section");
-							if (section && !section.hasClass(app.config.selectedClass)) {
+							if (section && !section.hasClass(config.selectedClass)) {
 								$menu.toggleSection(section);
 							}
 						} else {
-							item.removeClass(app.config.selectedClass);
+							item.removeClass(config.selectedClass);
 						}
 					}
 				});
@@ -132,6 +151,8 @@ if (!CALAVERA) {
 						}
 					});
 				});
+			} else {
+				section.children("a").attr("title", "");
 			}
 		});
 		
@@ -144,13 +165,13 @@ if (!CALAVERA) {
 			if (!submenu.length === 1) { return false; }
 			
 			submenu.slideToggle(o.slideSpeed);
-			section.toggleClass(app.config.selectedClass);
+			section.toggleClass(config.selectedClass);
 			
 			section.siblings().each(function() {
 				var sib = $(this);
-				if (sib.hasClass(app.config.selectedClass)) {
+				if (sib.hasClass(config.selectedClass)) {
 					sib.children("ul").slideUp(o.slideSpeed);
-					sib.removeClass(app.config.selectedClass);
+					sib.removeClass(config.selectedClass);
 				}
 			});
 		};
@@ -171,7 +192,7 @@ if (!CALAVERA) {
 		app.log("app[scrollPane]");
 		
 		o = $.extend({
-			selector:"#scroll-pane",
+			selector: "#scroll-pane",
 			scrollSpeed: 200,
 			startIndex: 0
 		}, options);
@@ -194,14 +215,14 @@ if (!CALAVERA) {
 						var panel, panelID;
 						panel = panels.eq(i);
 						if (i === currentIndex) {
-							panel.addClass(app.config.selectedClass);
+							panel.addClass(config.selectedClass);
 							panelID = panel.attr("id");
 							location.hash = panelID;
 							app.events.trigger("navigation.panelSelected", {
 								id: panelID
 							});
 						} else {
-							panel.removeClass(app.config.selectedClass);
+							panel.removeClass(config.selectedClass);
 						}
 					});
 				}
@@ -242,21 +263,51 @@ if (!CALAVERA) {
 		};
 		
 		$sp.goToID = function(id) {
-			app.log("app[scrollPane][selectAndGo]");
+			app.log("app[scrollPane][goToID]");
 			panels.each(function(i) {
-				if ($(this).attr("id") === id) { goToIndex(i); }
+				if ($(this).attr("id") === id) { 
+					goToIndex(i);
+					return $sp;
+				}
 			});
 			return $sp;
 		};
 				
 		return $sp;
 	};
-		
-	app.infiniteScroll = function() {
+	
+	// wraps $.infinitescroll by Paul Irish
+	// see http://www.infinite-scroll.com	
+	app.infiniteScroll = function(options) {
+		var $is, o;
 		app.log("app[infiniteScroll]");
+		
+		o = $.extend({
+			selector: ".main",
+			navSelector: ".pagination",
+			nextSelector: ".pagination .next a",
+			itemSelector: ".post",
+			loadingImg: null
+		}, options);
+		
+		$is = $(o.selector).infinitescroll({
+			navSelector: o.navSelector,
+			nextSelector: o.nextSelector,
+			itemSelector: o.itemSelector,
+			loadingImg: o.loadingImg,
+			animate: true,
+			loadingText: "",
+			donetext: ""
+		});
+		
+		$(document).bind('retrieve.infscr', function() {
+			app.log("document[retrieve.infscr]");
+		});
+		
+		return $is;
 	};
 	
-	app.config.videoSettings = {
+	config.videoSettings = {
 		controlsBelow: true,
 		controlsAtStart: true,
 		controlsHiding: false
@@ -267,7 +318,7 @@ if (!CALAVERA) {
 		app.log("app[videos]");
 		videos = [];
 		$("video").each(function(i) {
-			var $v = $(this).VideoJS(app.config.videoSettings);
+			var $v = $(this).VideoJS(config.videoSettings);
 			
 			app.events.bind("navigation.panelSelected", function(e, d) {
 				app.log("app[videos][panelSelectedHandler]");
@@ -285,14 +336,7 @@ if (!CALAVERA) {
 		app.instances.menu = app.menu();
 		
 		if (typeof ENVIRONMENT === "object") {
-			if (typeof ENVIRONMENT.features === "object") {
-				$.each(ENVIRONMENT.features, function(i) {
-					if ($.isFunction(app[ENVIRONMENT.features[i].feature])) {
-						app.instances[ENVIRONMENT.features[i].feature] = 
-							app[ENVIRONMENT.features[i].feature](ENVIRONMENT.features[i].options || null);
-					}
-				});
-			}
+			setupApplicationFeatures(ENVIRONMENT);
 		}
 		
 		if (app.instances.scrollPane) {
