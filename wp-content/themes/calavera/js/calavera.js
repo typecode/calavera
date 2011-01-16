@@ -276,10 +276,9 @@ if (!CALAVERA) {
 		return $sp;
 	};
 	
-	// wraps $.infinitescroll by Paul Irish
-	// see http://www.infinite-scroll.com	
 	app.infiniteScroll = function(options) {
-		var $is, o;
+		var $is, 
+			o;
 		app.log("app[infiniteScroll]");
 		
 		o = $.extend({
@@ -297,7 +296,8 @@ if (!CALAVERA) {
 			loadingImg: o.loadingImg,
 			animate: true,
 			loadingText: "",
-			donetext: ""
+			donetext: "",
+			debug: config.debug
 		});
 		
 		$(document).bind('retrieve.infscr', function() {
@@ -305,6 +305,57 @@ if (!CALAVERA) {
 		});
 		
 		return $is;
+	};
+	
+	app.blogPosts = function(options) {
+		var posts,
+			setupBlogPost,
+			o;
+		app.log("app[blogPosts]");
+		
+		o = $.extend({
+			selector: ".post",
+			moreLinkSelector: "a.more-link",
+			moreText:"Read more",
+			lessText:"Read less",
+			tailSelector: ".part-2",
+			slideSpeed: 100
+		}, options);
+		
+		posts = [];
+		
+		setupBlogPost = function(p) {
+			var moreLink, 
+				part2, 
+				isExpanded;
+			moreLink = p.find(o.moreLinkSelector);
+			part2 = p.find(o.tailSelector);
+			if (moreLink.length === 1) {
+				if (part2.length === 1) {
+					moreLink.click(function(e) {
+						e.preventDefault();
+						if (isExpanded) {
+							part2.slideUp(o.slideSpeed, function() {
+								isExpanded = false;
+								moreLink.text(o.moreText);
+							});
+						} else { 
+							part2.slideDown(o.slideSpeed, function() {
+								isExpanded = true;
+								moreLink.text(o.lessText);
+							});
+						}
+					});
+				}
+			}
+			return p;
+		};
+		
+		$(o.selector).each(function(i) {
+			posts[i] = setupBlogPost( $(this) );
+		});
+		
+		return posts;
 	};
 	
 	config.videoSettings = {
@@ -338,6 +389,8 @@ if (!CALAVERA) {
 		if (typeof ENVIRONMENT === "object") {
 			setupApplicationFeatures(ENVIRONMENT);
 		}
+		
+		app.dump(app.instances);
 		
 		if (app.instances.scrollPane) {
 			if (location.hash) {

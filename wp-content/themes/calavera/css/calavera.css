@@ -71,7 +71,8 @@ cite {
 .menu > li { 
 	border-top:1px solid #f7a300; 
 }
-.menu > li.page_item {
+.menu > li.page_item,
+.menu > li.cat-item {
 	border-top-color:#fecc00;
 }
 .menu li > a { 
@@ -91,6 +92,8 @@ cite {
 }
 .menu > li > a:hover,
 .menu > li.page_item > a:hover,
+.menu > li.current_page_item > a,
+.menu > li.current-cat > a,
 .menu > li.selected > a { 
 	color:#000000; background-color:#fcca29; 
 }
@@ -132,8 +135,24 @@ a.more-link {
 	width:394px;
 }
 
-.main .box .bd p {
+.scroll-pane .box .bd p {
 	width:394px;
+}
+
+.contact-info > div {
+	padding:0 0 1.2em;
+}
+.contact-info p {
+	padding:0;
+}
+.contact-info a,
+.contact-info a:link,
+.contact-info a:visited { 
+	font-weight:normal;
+}
+
+.post .part-2 {
+	display:none;
 }
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/

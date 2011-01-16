@@ -4,6 +4,9 @@
  *
  */
 get_header();
+
+$moreText = "Read more";
+
 ?>
 	<script type="text/javascript">
 		var ENVIRONMENT = {
@@ -11,6 +14,12 @@ get_header();
 				feature: "infiniteScroll",
 				options: {
 					loadingImg: "<?php bloginfo('template_url'); ?>/images/loading.gif"
+				}
+			}, { 
+				feature: "blogPosts",
+				options: {
+					moreText: "<?php echo $moreText; ?>",
+					lessText: "Read less"
 				}
 			}]
 		};
@@ -29,7 +38,27 @@ get_header();
 						</div>
 					</div>
 					<div class="bd">
-						<?php the_content(); ?>
+						<?php
+							if (strpos($post->post_content, '<!--more-->')) {
+								global $more;
+								
+								$more = 0;
+								echo '<div class="part-1">';
+								the_content("");
+								echo "</div>";
+								
+								echo "<p class='more-link-holder'>";
+								echo "<a class='more-link' href='#'>" . $moreText . "</a>";
+								echo "</p>";
+								
+								$more = 1;
+								echo '<div class="part-2">';
+								the_content("", TRUE, "");
+								echo "</div>";
+							} else {
+								the_content();
+							}
+						?>
 					</div>
 				</div>
 			<?php endwhile; ?>
