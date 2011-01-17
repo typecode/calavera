@@ -130,6 +130,10 @@ cite {
 	margin:0;
 }
 
+.hd .meta {
+	min-height:14px;
+}
+
 a.more-link { 
 	text-transform:uppercase; 
 }
@@ -139,7 +143,15 @@ a.more-link {
 }
 
 .scroll-pane .box .bd p {
-	width:394px;
+	width:394px; float:left; clear:left;
+}
+
+.bd .extras {
+	width:250px; margin:0 0 0 394px;
+	text-align:right;
+}
+.bd .extras img {
+	margin:9px 0 0 9px;
 }
 
 .contact-info > div {

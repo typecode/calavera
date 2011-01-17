@@ -73,9 +73,9 @@ function calavera_videos_main() {
 			$id = $video->ID;
 			$title = $video->post_title;
 			
-			$output .= "<div id='" . generateVideoHash($title) . "' class='box'>";
-			$output .= "<div class='hd'>"; 
-			$output .= "<h2>" . $title . "</h2>";
+			$output .= "<div id='" . generateVideoHash($title) . "' class='box'>"
+				. "<div class='hd'>" 
+					. "<h2>" . $title . "</h2>";
 			
 			$director = get_post_meta($id, "director", true);
 			$producer = get_post_meta($id, "producer", true);
@@ -90,13 +90,20 @@ function calavera_videos_main() {
 				}
 				$output .= "Producer: " . $producer;
 			}
-			$output .= "</div>"; //end .meta
-			$output .= "</div>"; //end .hd
+			$output .= "</div>" //end .meta
+				. "</div>"; //end .hd
 			
 			$output .= "<div class='bd'>" 
-				. str_replace(']]>', ']]&gt', apply_filters('the_content', $video->post_content)) 
-			. "</div>";
-			$output .= "</div>"; //end .box
+					. str_replace(']]>', ']]&gt', apply_filters('the_content', $video->post_content)) 
+					. "<div class='extras'>";
+						$laurels = get_post_meta($id, "laurel", false);
+						foreach ($laurels as $laurel) {
+							$output .= "<img src='" . $laurel . "' alt='" . $title . " laurel'/>";
+						}
+					$output .= "</div>"
+					
+				. "</div>" //end .bd
+			. "</div>"; //end .box
 		}
 	}
 	echo $output;

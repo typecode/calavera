@@ -21,7 +21,7 @@
 
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>"/>
 
-	<!--<link rel="shortcut icon" type="images/png" href="<?php //bloginfo('template_url'); ?>/images/favicon.png"/>-->
+	<link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/images/favicon.ico"/>
 	
 	<link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="all"/>
 		
