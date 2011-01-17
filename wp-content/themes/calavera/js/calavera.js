@@ -137,7 +137,7 @@ window.CALAVERA = {
 		$menu.width( $menu.width() );
 		
 		$menu.children("li").each(function() {
-			var section = $(this), submenu;
+			var section, submenu;
 			section = $(this);
 			submenu = section.children("ul");
 			if (submenu.length === 1) {
@@ -307,9 +307,8 @@ window.CALAVERA = {
 	};
 	
 	app.infiniteScroll = function(options) {
-		var $is, 
-			o;
-			
+		var $is, o;
+		
 		app.log("app[infiniteScroll]");
 		
 		o = $.extend({
