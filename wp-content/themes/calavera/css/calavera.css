@@ -172,12 +172,15 @@ a.more-link {
 
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
+.scroll-pane,
+.scroll-pane .holder > div { overflow:hidden; height:500px; }
+
 .scroll-pane {
-	overflow:hidden; height:565px; margin:0 0 10px;
+	margin:0 0 10px;
 }
 
 .scroll-pane .holder { }
-.scroll-pane .holder > div { overflow:hidden; height:565px; }
+.scroll-pane .holder > div { }
 
 .scroll-controls {
 	position:absolute; right:-16px; top:50px;

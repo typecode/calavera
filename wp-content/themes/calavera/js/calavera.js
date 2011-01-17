@@ -309,7 +309,7 @@ if (!CALAVERA) {
 	
 	app.blogPosts = function(options) {
 		var posts,
-			setupBlogPost,
+			blogPost,
 			o;
 		app.log("app[blogPosts]");
 		
@@ -324,35 +324,44 @@ if (!CALAVERA) {
 		
 		posts = [];
 		
-		setupBlogPost = function(bp) {
+		// initializer for an individual blog post
+		blogPost = function($bp, index) {
 			var moreLink, 
 				part2, 
 				isExpanded;
-			moreLink = bp.find(o.moreLinkSelector);
-			part2 = bp.find(o.tailSelector);
+				
+			moreLink = $bp.find(o.moreLinkSelector);
+			part2 = $bp.find(o.tailSelector);
+			
+			$bp.toggleExpansion = function() {
+				app.log("app[blogPosts][" + index + "][toggleExpansion]");
+				if (isExpanded) {
+					part2.slideUp(o.slideSpeed, function() {
+						isExpanded = false;
+						moreLink.text(o.moreText);
+					});
+				} else { 
+					part2.slideDown(o.slideSpeed, function() {
+						isExpanded = true;
+						moreLink.text(o.lessText);
+					});
+				}
+			};
+			
 			if (moreLink.length === 1) {
 				if (part2.length === 1) {
 					moreLink.click(function(e) {
 						e.preventDefault();
-						if (isExpanded) {
-							part2.slideUp(o.slideSpeed, function() {
-								isExpanded = false;
-								moreLink.text(o.moreText);
-							});
-						} else { 
-							part2.slideDown(o.slideSpeed, function() {
-								isExpanded = true;
-								moreLink.text(o.lessText);
-							});
-						}
+						$bp.toggleExpansion();
 					});
 				}
 			}
-			return bp;
+			
+			return $bp;
 		};
 		
 		$(o.selector).each(function(i) {
-			posts[i] = setupBlogPost( $(this) );
+			posts[i] = blogPost($(this), i);
 		});
 		
 		return posts;
@@ -372,7 +381,7 @@ if (!CALAVERA) {
 			var $v = $(this).VideoJS(config.videoSettings);
 			
 			app.events.bind("navigation.panelSelected", function(e, d) {
-				app.log("app[videos][panelSelectedHandler]");
+				app.log("app[videos][" + i + "][panelSelectedHandler]");
 				$v[0].player.pause();
 			});
 			
