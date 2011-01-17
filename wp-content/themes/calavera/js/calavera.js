@@ -11,77 +11,92 @@
          Y8b d88P 888                                                                
           "Y88P"  888
 
-	lev@typeslashcode.com
+	by Lev Kanter
+	   lev@typeslashcode.com
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
-if (!CALAVERA) {
-	var CALAVERA = {
-		version: 0.1,
-		name: "Calavera"
-	};
-}
+window.CALAVERA = {
+	version: 0.1,
+	name: "Calavera"
+};
 
 // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-(function(app, $) {
+(function(app, environment, $) {
 	
 	var config = {
-		debug: true
+		debug: true,
+		
+		selectedClass: "selected",
+		
+		videoSettings: {
+			controlsBelow: true,
+			controlsAtStart: true,
+			controlsHiding: false
+		}
 	};
 	
 	if (config.debug && 
-		typeof console !== "undefined" &&
-		typeof console.debug !== "undefined")
-	{
+			typeof window.console !== "undefined" &&
+			typeof window.console.debug !== "undefined") {
 		app.log = function(message, level) {
-			console[level || "info"](message);
+			window.console[level || "info"](message);
 		};
 		app.dump = function(obj) {
-			console.log(obj);
+			window.console.log(obj);
 		};
 	} else {
 		app.log = app.dump = function() {};
 	}
 	
-	function setupApplicationFeatures(environment) {
-		function makeFeature(o) {
+	/**
+	 * initialize environment-specific components
+	 * from an array of "feature" objects, each one
+	 * of the form { feature: "foo", options: {} },
+	 * which invokes app[foo](options)
+	 */
+	function initAppFeatures() {
+		var makeFeature = function(o) {
 			if (app.instances[o.feature]) {
-				
+				app.log(o.feature + " already initialized", "warn");
 			} else if (typeof app[o.feature] === "function") {
 				app.instances[o.feature] = app[o.feature](o.options);
 			}
 		};
 
-		if (typeof environment.features === "object") {
+		if ($.isArray(environment.features)) {
 			$.each(environment.features, function(i) { 
 				makeFeature(environment.features[i]);
 			});
 		}
-	};
+	}
 	
 	function getSelectorFromHash(url) {
 		var buf = url.split("#");
 		if (buf.length > 1) { return "#" + buf[buf.length - 1]; }
 		return false;
-	};
+	}
 	
+	/**
+	 * If a URL links to a DOM element on the page, 
+	 * Find that element and return it as a jQuery obj
+	 * otherwise, return false
+	 */
 	function selectFromURL(url) {
 		var selector, element;
 		selector = getSelectorFromHash(url);
 		if (!selector) { return false; }
 		element = $(selector);
 		return element.length ? element : false;
-	};
+	}
 	
 	app.instances = {};
 	app.events = $({});
-	
-	config.selectedClass = "selected";
-	
+		
 	app.menu = function(options) {
 		var $menu, 
-			pageLocalItems,
+			pageLocalItems, // array containing jQuery objects of the menu items
+			                // that "link" to elements on the current page
 			panelSelectedHandler,
 			o;
 		
@@ -93,8 +108,6 @@ if (!CALAVERA) {
 		}, options);
 		
 		$menu = $(o.selector).eq(0);
-		// array containing jQuery objects of the menu items 
-		// that "link" to elements on the current page:
 		pageLocalItems = [];
 		
 		panelSelectedHandler = function(e, d) {
@@ -119,7 +132,7 @@ if (!CALAVERA) {
 			}
 		};
 		
-		// setting an explicit width, to insure that 
+		// setting an explicit width to insure that 
 		// expanding a section doesn't widen the menu:
 		$menu.width( $menu.width() );
 		
@@ -162,7 +175,7 @@ if (!CALAVERA) {
 			var submenu;
 			app.log("app[menu][toggleSection]");
 			submenu = section.children("ul");
-			if (!submenu.length === 1) { return false; }
+			if (submenu.length !== 1) { return false; }
 			
 			submenu.slideToggle(o.slideSpeed);
 			section.toggleClass(config.selectedClass);
@@ -181,8 +194,8 @@ if (!CALAVERA) {
 	
 	app.scrollPane = function(options) {
 		var $sp,
-			scroll,
-			panels,
+			scroll, // the parent element that holds all the panels
+			panels, // array of individual items 
 			panelHeight,
 			currentIndex,
 			goToIndex,
@@ -217,7 +230,7 @@ if (!CALAVERA) {
 						if (i === currentIndex) {
 							panel.addClass(config.selectedClass);
 							panelID = panel.attr("id");
-							location.hash = panelID;
+							window.location.hash = panelID;
 							app.events.trigger("navigation.panelSelected", {
 								id: panelID
 							});
@@ -276,9 +289,27 @@ if (!CALAVERA) {
 		return $sp;
 	};
 	
+	app.videos = function() {
+		var videos;
+		app.log("app[videos]");
+		videos = [];
+		$("video").each(function(i) {
+			var $v = $(this).VideoJS(config.videoSettings);
+			
+			app.events.bind("navigation.panelSelected", function(e, d) {
+				app.log("app[videos][" + i + "][panelSelectedHandler]");
+				$v[0].player.pause();
+			});
+			
+			videos[i] = $v;
+		});
+		return videos;
+	};
+	
 	app.infiniteScroll = function(options) {
 		var $is, 
 			o;
+			
 		app.log("app[infiniteScroll]");
 		
 		o = $.extend({
@@ -300,7 +331,7 @@ if (!CALAVERA) {
 			debug: config.debug
 		});
 		
-		$(document).bind('retrieve.infscr', function() {
+		$(window.document).bind('retrieve.infscr', function() {
 			app.log("document[retrieve.infscr]");
 		});
 		
@@ -308,9 +339,10 @@ if (!CALAVERA) {
 	};
 	
 	app.blogPosts = function(options) {
-		var posts,
-			blogPost,
+		var posts, // array of blog posts
+			blogPost, // initializer for an individual blog post
 			o;
+			
 		app.log("app[blogPosts]");
 		
 		o = $.extend({
@@ -324,7 +356,6 @@ if (!CALAVERA) {
 		
 		posts = [];
 		
-		// initializer for an individual blog post
 		blogPost = function($bp, index) {
 			var moreLink, 
 				part2, 
@@ -332,9 +363,10 @@ if (!CALAVERA) {
 				
 			moreLink = $bp.find(o.moreLinkSelector);
 			part2 = $bp.find(o.tailSelector);
+			isExpanded = false;
 			
-			$bp.toggleExpansion = function() {
-				app.log("app[blogPosts][" + index + "][toggleExpansion]");
+			$bp.toggleBlogPost = function() {
+				app.log("app[blogPosts][" + index + "][toggleBlogPost]");
 				if (isExpanded) {
 					part2.slideUp(o.slideSpeed, function() {
 						isExpanded = false;
@@ -352,7 +384,7 @@ if (!CALAVERA) {
 				if (part2.length === 1) {
 					moreLink.click(function(e) {
 						e.preventDefault();
-						$bp.toggleExpansion();
+						$bp.toggleBlogPost();
 					});
 				}
 			}
@@ -367,44 +399,28 @@ if (!CALAVERA) {
 		return posts;
 	};
 	
-	config.videoSettings = {
-		controlsBelow: true,
-		controlsAtStart: true,
-		controlsHiding: false
-	};
+// :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	
-	app.videos = function() {
-		var videos;
-		app.log("app[videos]");
-		videos = [];
-		$("video").each(function(i) {
-			var $v = $(this).VideoJS(config.videoSettings);
-			
-			app.events.bind("navigation.panelSelected", function(e, d) {
-				app.log("app[videos][" + i + "][panelSelectedHandler]");
-				$v[0].player.pause();
-			});
-			
-			videos[i] = $v;
-		});
-		return videos;
-	};
-	
+	/**
+	 * Kick-off
+	 */
 	$(function() {
 		app.log("document[ready]");
 		
 		app.instances.menu = app.menu();
 		
-		if (typeof ENVIRONMENT === "object") {
-			setupApplicationFeatures(ENVIRONMENT);
+		if (typeof environment === "object") {
+			initAppFeatures();
 		}
 		
 		app.dump(app.instances);
 		
+		// if a specific panel was linked to, select it 
+		// otherwise, select the first panel:
 		if (app.instances.scrollPane) {
-			if (location.hash) {
+			if (window.location.hash) {
 				app.events.trigger("navigation.selectPanel", {
-					id: location.hash.substring(1)
+					id: window.location.hash.substring(1)
 				});
 			} else {
 				app.instances.scrollPane.goToFirst();
@@ -412,5 +428,8 @@ if (!CALAVERA) {
 		}
 	});
 	
-}(CALAVERA, jQuery));
-
+	app.log("::::::::::::::::::::::::::::::::::::::::::::::::");
+	app.log(app.name + " " + app.version);
+	app.log("::::::::::::::::::::::::::::::::::::::::::::::::");
+	
+}(window.CALAVERA, window.ENVIRONMENT, window.jQuery));
