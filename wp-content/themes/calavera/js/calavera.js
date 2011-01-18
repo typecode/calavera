@@ -25,7 +25,7 @@ window.CALAVERA = {
 (function(app, environment, $) {
 	
 	var config = {
-		debug: true,
+		debug: false,
 		
 		selectedClass: "selected",
 		
