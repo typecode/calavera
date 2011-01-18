@@ -173,7 +173,7 @@ a.more-link {
 /*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
 .scroll-pane,
-.scroll-pane .holder > div { overflow:hidden; height:500px; }
+.scroll-pane .holder > div { overflow:hidden; height:520px; }
 
 .scroll-pane {
 	margin:0 0 10px;
