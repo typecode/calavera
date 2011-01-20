@@ -21,7 +21,8 @@ $news_id = $news_slug->term_id;
 /*----- Video listing and display -----*/
 
 function generateVideoHash($title) {
-	return str_replace(" ", "", $title);
+	$output = str_replace(" ", "", $title);
+	return sanitize_title($output);
 }
 
 $videos = get_category_by_slug('videos');
