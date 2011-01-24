@@ -168,7 +168,7 @@ _end_;
 	
 	$videojs .= <<<_end_
 	<div class="video-js-box calavera-player">
-		<video class="video-js" width="{$width}" height="{$height}" {$poster_attribute} controls {$preload_attribute} {$autoplay_attribute}>
+		<video class="video-js" width="{$width}" height="{$height}" {$poster_attribute} {$preload_attribute} {$autoplay_attribute}>
 		{$mp4_source}
 		{$webm_source}
 		{$ogg_source}
