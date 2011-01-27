@@ -169,15 +169,15 @@ _end_;
 	$videojs .= <<<_end_
 	<div class="video-js-box calavera-player">
 		<video class="video-js" width="{$width}" height="{$height}" {$poster_attribute} {$preload_attribute} {$autoplay_attribute}>
-		{$mp4_source}
-		{$webm_source}
-		{$ogg_source}
-		<object class="vjs-flash-fallback" width="{$width}" height="{$height}" type="application/x-shockwave-flash" data="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf">
-			<param name="movie" value="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf" />
-			<param name="allowfullscreen" value="true" />
-			<param name="flashvars" value='config={"playlist":[$flow_player_poster{"url": "$mp4" $flow_player_autoplay $flow_player_preload }]}' />
-			{$image_fallback}
-		</object>
+			{$webm_source}
+			{$ogg_source}
+			{$mp4_source}
+			<object class="vjs-flash-fallback" width="{$width}" height="{$height}" type="application/x-shockwave-flash" data="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf">
+				<param name="movie" value="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf" />
+				<param name="allowfullscreen" value="true" />
+				<param name="flashvars" value='config={"playlist":[$flow_player_poster{"url": "$mp4" $flow_player_autoplay $flow_player_preload }]}' />
+				{$image_fallback}
+			</object>
 		</video>
 	</div>
 _end_;
