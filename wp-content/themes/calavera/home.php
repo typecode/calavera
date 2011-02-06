@@ -9,10 +9,6 @@ get_header();
 $moreText = "Read more";
 global $news_id;
 
-query_posts(array(
-	"paged" => (get_query_var("paged")) ? get_query_var("paged") : 1,
-	"cat" => $news_id
-));
 ?>
 	<script type="text/javascript">
 		var ENVIRONMENT = {
@@ -32,6 +28,13 @@ query_posts(array(
 	</script>
 		
 	<?php include(TEMPLATEPATH . '/rail.php'); ?>
+	
+	<?php
+		query_posts(array(
+			"paged" => (get_query_var("paged")) ? get_query_var("paged") : 1,
+			"cat" => $news_id
+		));
+	?>
 	
 	<div class="main">
 		<?php if (have_posts()) : ?>
