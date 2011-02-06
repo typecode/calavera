@@ -25,17 +25,22 @@ function generateVideoHash($title) {
 	return sanitize_title($output);
 }
 
-$videos = get_category_by_slug('videos');
+$videos_slug = get_category_by_slug('videos');
+$videos_id = $videos_slug->term_id;
 $videoSections = get_categories(array(
 	'orderby' => 'id',
-	'parent' => $videos->term_id
+	'parent' => $videos_id
 ));
 
+$video_page = get_page_by_title('Videos');
+$video_page_id = $video_page->ID;
+
 function calavera_videos_menu() {
+	global $video_page_id;
+	global $videoSections;
 	$output = "";
 	$counter = 0;
-	$baseURL = get_bloginfo("url");
-	global $videoSections;
+	$baseURL = get_page_link($video_page_id);
 	foreach ($videoSections as $section) {
 		if ($counter == 0) {
 			$output .= "<li class='section-start'>";

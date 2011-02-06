@@ -23,6 +23,10 @@ get_header();
 					</div>
 				</div>
 			<?php endwhile; ?>
+			<div class="box pagination">
+				<span class="prev"><?php previous_posts_link('<span class="arr">&larr;</span>  Previous'); ?></span>
+				<span class="next"><?php next_posts_link('Next <span class="arr">&rarr;</span>'); ?></span>
+			</div>
 		<?php endif; ?>
 	</div>
 	
