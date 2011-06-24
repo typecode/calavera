@@ -83,18 +83,24 @@ function calavera_videos_main() {
 				. "<div class='hd'>" 
 					. "<h2>" . $title . "</h2>";
 			
-			$director = get_post_meta($id, "director", true);
-			$producer = get_post_meta($id, "producer", true);
+			$film_meta = get_post_meta($id, "film_meta", true);
 			
 			$output .= "<div class='meta'>";
-			if ($director) {
-				$output .= "Director: " . $director;
-			}
-			if ($producer) {
+			if ($film_meta) {
+				$output .= $film_meta;
+			} else {
+				$director =  get_post_meta($id, "director", true);
+				$producer =  get_post_meta($id, "producer", true);
+				
 				if ($director) {
-					$output .= ", ";
+					$output .= "Director: " . $director;
 				}
-				$output .= "Producer: " . $producer;
+				if ($producer) {
+					if ($director) {
+						$output .= ", ";
+					}
+					$output .= "Producer: " . $producer;
+				}
 			}
 			$output .= "</div>" //end .meta
 				. "</div>"; //end .hd
